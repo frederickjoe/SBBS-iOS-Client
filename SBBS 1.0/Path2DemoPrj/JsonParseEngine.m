@@ -252,7 +252,7 @@
             NSString * board = [[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"board"];
             
             NSString *  timeString = [[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"time"];
-            NSLog(@"%@",timeString);
+            //NSLog(@"%@",timeString);
             NSDateFormatter *inputFormat = [[NSDateFormatter alloc] init];
             [inputFormat setDateFormat:@"yyyyMMdd"]; //20101208
             //将NSString转换为NSDate
@@ -305,7 +305,26 @@
             
             NSString * quote = [[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"quote"];
             NSString * quoter = [[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"quoter"];
-            
+            /////////附件///////
+            NSMutableArray * attArray=[[NSMutableArray alloc] init];
+            NSDictionary * attDic=[[topicsDictionary objectForKey:@"topics"] objectAtIndex: i];
+            for (int j=0;  j<[[attDic objectForKey:@"attachments"]count];j++) {
+                Attachment *attElement=[[Attachment alloc]init];
+                [attElement setAttFileName:[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"filename"]];
+                
+                [attElement setAttId:[[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"id"] intValue]];
+                
+                [attElement setAttPos:[[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"pos"] intValue]];
+                
+                [attElement setAttSize:[[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"size"] intValue]];
+                
+                [attElement setAttUrl:[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"url"]];
+                
+                [attArray addObject:attElement];
+                [attElement release];
+            }
+            ///////////////////
+            topic.attachments = attArray;
             topic.ID = ID;
             topic.gID = gID;
             topic.reid = reid;

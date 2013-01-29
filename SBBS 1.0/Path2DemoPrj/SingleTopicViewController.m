@@ -113,7 +113,7 @@
 
 
 
-#pragma mark - 
+#pragma mark -
 #pragma mark tableViewDelegate
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -166,9 +166,9 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath   
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     if (indexPath.row == 0)
     {
         Topic * topic = [topicsArray objectAtIndex:0];
@@ -199,8 +199,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     /*
-    CGRect rect = [tableView rectForRowAtIndexPath:indexPath];
-    [tableView setContentOffset:CGPointMake(rect.origin.x, rect.origin.y) animated:YES];
+     CGRect rect = [tableView rectForRowAtIndexPath:indexPath];
+     [tableView setContentOffset:CGPointMake(rect.origin.x, rect.origin.y) animated:YES];
      */
     
     UITableViewCell * cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
@@ -258,22 +258,22 @@
     UIImage *refreshImage = [UIImage imageNamed:@"refresh.png"];
     
     QuadCurveMenuItem * starMenuItem1 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
-                                                               highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:commentImage 
-                                                        highlightedContentImage:nil];
+                                                                highlightedImage:storyMenuItemImagePressed
+                                                                    ContentImage:commentImage
+                                                         highlightedContentImage:nil];
     QuadCurveMenuItem *starMenuItem2 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
-                                                               highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:writenewImage 
+                                                               highlightedImage:storyMenuItemImagePressed
+                                                                   ContentImage:writenewImage
                                                         highlightedContentImage:nil];
     QuadCurveMenuItem *starMenuItem3 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
-                                                               highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:homeImage 
+                                                               highlightedImage:storyMenuItemImagePressed
+                                                                   ContentImage:homeImage
                                                         highlightedContentImage:nil];
     QuadCurveMenuItem *starMenuItem4 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
-                                                               highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:refreshImage 
+                                                               highlightedImage:storyMenuItemImagePressed
+                                                                   ContentImage:refreshImage
                                                         highlightedContentImage:nil];
-
+    
     NSArray *menus = [NSArray arrayWithObjects:starMenuItem1, starMenuItem2, starMenuItem3, starMenuItem4, nil];
     [starMenuItem1 release];
     [starMenuItem2 release];
@@ -319,7 +319,7 @@
     if (idx == 2) {
         TopicsViewController * topicsViewController = [[TopicsViewController alloc] initWithNibName:@"TopicsViewController" bundle:nil];
         topicsViewController.boardName = rootTopic.board;
-    
+        
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:topicsViewController animated:YES];
@@ -345,25 +345,51 @@
     [string appendString:selectTopic.author];
     [string appendString:@"的帖子"];
     if ([myBBS.mySelf.ID isEqualToString:selectTopic.author]) {
-        UIActionSheet*actionSheet = [[UIActionSheet alloc] 
+        if ([[selectTopic attachments] count]>=1) {
+            UIActionSheet*actionSheet = [[UIActionSheet alloc]
+                                         initWithTitle:string
+                                         delegate:self
+                                         cancelButtonTitle:@"取消"
+                                         destructiveButtonTitle:nil
+                                         otherButtonTitles:@"回复", @"查看我的资料", @"修改文章",@"查看附件", nil];
+            actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+            [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
+            [actionSheet release];
+        }
+        else
+        {
+            UIActionSheet*actionSheet = [[UIActionSheet alloc]
+                                         initWithTitle:string
+                                         delegate:self
+                                         cancelButtonTitle:@"取消"
+                                         destructiveButtonTitle:nil
+                                         otherButtonTitles:@"回复", @"查看我的资料", @"修改文章", nil];
+            actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+            [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
+            [actionSheet release];
+        }
+        
+    }
+    else if([[selectTopic attachments] count]>=1){
+        UIActionSheet*actionSheet = [[UIActionSheet alloc]
                                      initWithTitle:string
                                      delegate:self
                                      cancelButtonTitle:@"取消"
                                      destructiveButtonTitle:nil
-                                     otherButtonTitles:@"回复", @"查看我的资料", @"修改文章", nil];
+                                     otherButtonTitles:@"回复", @"查看此用户资料", @"查看附件",nil];
+        
         actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
         [actionSheet release];
-
     }
-    else {
-        UIActionSheet*actionSheet = [[UIActionSheet alloc] 
-                                 initWithTitle:string
-                                 delegate:self
-                                 cancelButtonTitle:@"取消"
-                                 destructiveButtonTitle:nil
-                                 otherButtonTitles:@"回复", @"查看此用户资料", nil];
-    
+    else{
+        UIActionSheet*actionSheet = [[UIActionSheet alloc]
+                                     initWithTitle:string
+                                     delegate:self
+                                     cancelButtonTitle:@"取消"
+                                     destructiveButtonTitle:nil
+                                     otherButtonTitles:@"回复", @"查看此用户资料" ,nil];
+        
         actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
         [actionSheet release];
@@ -371,8 +397,64 @@
 }
 - (void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    if ([[selectTopic attachments] count]>=1) {
+        //如果当前topic有附件
+        if(buttonIndex == 0)
+        {//0号为回复
+            if (myBBS.mySelf.ID == nil) {
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                // Configure for text only and offset down
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"请先登录";
+                hud.margin = 30.f;
+                hud.yOffset = 0.f;
+                hud.removeFromSuperViewOnHide = YES;
+                [hud hide:YES afterDelay:1];
+            }
+            else {
+                AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                PostTopicViewController * postTopicViewController = [[PostTopicViewController alloc] initWithNibName:@"PostTopicViewController" bundle:nil];
+                postTopicViewController.postType = 1;
+                postTopicViewController.rootTopic = selectTopic;
+                postTopicViewController.mDelegate = appDelegate.homeViewController;
+                //[self presentModalViewController:postTopicViewController animated:YES];
+                [appDelegate.homeViewController presentModalViewController:postTopicViewController animated:YES];
+            }
+        }
+        if(buttonIndex == 1)
+        {//1号为查看用户资料
+            UserInfoViewController * userInfoViewController = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
+            userInfoViewController.userString = selectTopic.author;
+            
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            HomeViewController * home = appDelegate.homeViewController;
+            [home.navigationController pushViewController:userInfoViewController animated:YES];
+            [userInfoViewController release];
+        }
+        if(buttonIndex == 2 && [myBBS.mySelf.ID isEqualToString:selectTopic.author])
+        {//当前话题作者等于自己，2号即为修改文章
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            PostTopicViewController * postTopicViewController = [[PostTopicViewController alloc] initWithNibName:@"PostTopicViewController" bundle:nil];
+            postTopicViewController.postType = 2;
+            postTopicViewController.rootTopic = selectTopic;
+            postTopicViewController.mDelegate = appDelegate.homeViewController;
+            //[self presentModalViewController:postTopicViewController animated:YES];
+            [appDelegate.homeViewController presentModalViewController:postTopicViewController animated:YES];
+            [postTopicViewController release];
+        }
+    if(buttonIndex == 2 && ![myBBS.mySelf.ID isEqualToString:selectTopic.author])
+    {//当前话题作者不是自己，2号即为查看附件
+        //查看附件的代码
+        NSLog(@"ViewAtt not for Self");
+    }
+    if (buttonIndex ==3 && [myBBS.mySelf.ID isEqualToString:selectTopic.author]) {
+        NSLog(@"View Att for Self");
+    }
+    
+}
+else{
     if(buttonIndex == 0)
-    {
+    {//0号为回复
         if (myBBS.mySelf.ID == nil) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             // Configure for text only and offset down
@@ -384,17 +466,17 @@
             [hud hide:YES afterDelay:1];
         }
         else {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        PostTopicViewController * postTopicViewController = [[PostTopicViewController alloc] initWithNibName:@"PostTopicViewController" bundle:nil];
-        postTopicViewController.postType = 1;
-        postTopicViewController.rootTopic = selectTopic;
-        postTopicViewController.mDelegate = appDelegate.homeViewController;
-        //[self presentModalViewController:postTopicViewController animated:YES];
-        [appDelegate.homeViewController presentModalViewController:postTopicViewController animated:YES];
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            PostTopicViewController * postTopicViewController = [[PostTopicViewController alloc] initWithNibName:@"PostTopicViewController" bundle:nil];
+            postTopicViewController.postType = 1;
+            postTopicViewController.rootTopic = selectTopic;
+            postTopicViewController.mDelegate = appDelegate.homeViewController;
+            //[self presentModalViewController:postTopicViewController animated:YES];
+            [appDelegate.homeViewController presentModalViewController:postTopicViewController animated:YES];
         }
     }
     if(buttonIndex == 1)
-    {
+    {//1号为查看用户资料
         UserInfoViewController * userInfoViewController = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
         userInfoViewController.userString = selectTopic.author;
         
@@ -404,7 +486,7 @@
         [userInfoViewController release];
     }
     if(buttonIndex == 2 && [myBBS.mySelf.ID isEqualToString:selectTopic.author])
-    {
+    {//当前话题作者等于自己，2号即为修改文章
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         PostTopicViewController * postTopicViewController = [[PostTopicViewController alloc] initWithNibName:@"PostTopicViewController" bundle:nil];
         postTopicViewController.postType = 2;
@@ -414,6 +496,9 @@
         [appDelegate.homeViewController presentModalViewController:postTopicViewController animated:YES];
         [postTopicViewController release];
     }
+}
+
+
 }
 
 

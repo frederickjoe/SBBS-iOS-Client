@@ -171,7 +171,7 @@
 	} 
     else if (scrollView.isDragging) 
     {
-        NSLog(@"%f",scrollView.contentOffset.y);
+        //NSLog(@"%f",scrollView.contentOffset.y);
         BOOL _loading = NO;
 		if ([_delegate respondsToSelector:@selector(refreshTableFooterDataSourceIsLoading:)]) 
         {

@@ -40,6 +40,7 @@
 		264FECE714A1840E001C15B3 /* icon-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 264FECC914A18389001C15B3 /* icon-star.png */; };
 		264FECE814A1840E001C15B3 /* icon-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 264FECCA14A18389001C15B3 /* icon-star@2x.png */; };
 		264FECEA14A18427001C15B3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264FECE914A18427001C15B3 /* QuartzCore.framework */; };
+		3E62D7F216B799A9008CA1FE /* Attachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E62D7F116B799A8008CA1FE /* Attachment.m */; };
 		E90571C91582419C0067E35B /* TimeScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = E90571C81582419C0067E35B /* TimeScroller.m */; };
 		E905990C157EF31F007EE2D2 /* MailsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E905990A157EF31F007EE2D2 /* MailsViewCell.m */; };
 		E905990D157EF31F007EE2D2 /* MailsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E905990B157EF31F007EE2D2 /* MailsViewCell.xib */; };
@@ -199,6 +200,8 @@
 		264FECC914A18389001C15B3 /* icon-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-star.png"; path = "Path2DemoPrj/icon-star.png"; sourceTree = "<group>"; };
 		264FECCA14A18389001C15B3 /* icon-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-star@2x.png"; path = "Path2DemoPrj/icon-star@2x.png"; sourceTree = "<group>"; };
 		264FECE914A18427001C15B3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3E62D7F016B799A8008CA1FE /* Attachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attachment.h; sourceTree = "<group>"; };
+		3E62D7F116B799A8008CA1FE /* Attachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attachment.m; sourceTree = "<group>"; };
 		CE8DDB761498E4BB00B0DDD0 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		CE8DDB771498E4BB00B0DDD0 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		CE8DDB781498E4BB00B0DDD0 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -456,8 +459,8 @@
 		CEB125631498D519008A4B70 /* 虎踞龙蟠 */ = {
 			isa = PBXGroup;
 			children = (
-				CEB1257A1498D617008A4B70 /* UI */,
 				E9F2A033154AEB1F00452F09 /* Engine */,
+				CEB1257A1498D617008A4B70 /* UI */,
 			);
 			name = "虎踞龙蟠";
 			path = Path2DemoPrj;
@@ -985,6 +988,8 @@
 		E9F2A034154AEB2700452F09 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				3E62D7F016B799A8008CA1FE /* Attachment.h */,
+				3E62D7F116B799A8008CA1FE /* Attachment.m */,
 				E9F2A035154AEB7500452F09 /* Topic.h */,
 				E9F2A036154AEB7500452F09 /* Topic.m */,
 				E9F2A038154AEC6E00452F09 /* Board.h */,
@@ -1251,6 +1256,7 @@
 				E9142DB4158124A600E2F8CE /* PostMailViewController.m in Sources */,
 				E96C07C915817A1600F1AFA4 /* AddPostUserViewController.m in Sources */,
 				E90571C91582419C0067E35B /* TimeScroller.m in Sources */,
+				3E62D7F216B799A9008CA1FE /* Attachment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

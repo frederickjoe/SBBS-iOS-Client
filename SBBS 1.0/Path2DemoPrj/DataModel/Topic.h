@@ -29,11 +29,12 @@
     NSString * quoter; //引用内容的作者
     NSString * last_author; //最后回复用户
     NSDate * last_time; //最后恢复时间
+    NSArray * attachments;//附件
 }
 
 @property(nonatomic, assign)int ID;//帖子ID
 @property(nonatomic, assign)int gID; //帖子所在主题的主ID
-@property(nonatomic, retain)NSString * board; //帖子所在版面
+@property(nonatomic, strong)NSString * board; //帖子所在版面
 @property(nonatomic, assign)int size; //帖子大小
 @property(nonatomic, assign)int read; //文章阅读数
 @property(nonatomic, assign)int replies; //文章回复数
@@ -42,14 +43,14 @@
 @property(nonatomic, assign)BOOL top; //是否置顶
 @property(nonatomic, assign)BOOL mark; //是否标记过
 @property(nonatomic, assign)BOOL norep; //文章设有’不可RE’标记
-@property(nonatomic, retain)NSString * author; //发贴人
-@property(nonatomic, retain)NSDate * time; //发贴时间戳
-@property(nonatomic, retain)NSString * title; //标题
-@property(nonatomic, retain)NSString * content; //内容
-@property(nonatomic, retain)NSString * quote; //帖子引用的内容
-@property(nonatomic, retain)NSString * quoter; //引用内容的作者
-@property(nonatomic, retain)NSString * last_author; //最后回复用户
-@property(nonatomic, retain)NSDate * last_time; //最后恢复时间
-
+@property(nonatomic, strong)NSString * author; //发贴人
+@property(nonatomic, strong)NSDate * time; //发贴时间戳
+@property(nonatomic, strong)NSString * title; //标题
+@property(nonatomic, strong)NSString * content; //内容
+@property(nonatomic, strong)NSString * quote; //帖子引用的内容
+@property(nonatomic, strong)NSString * quoter; //引用内容的作者
+@property(nonatomic, strong)NSString * last_author; //最后回复用户
+@property(nonatomic, strong)NSDate * last_time; //最后恢复时间
+@property(nonatomic, strong)NSArray * attachments;//附件
 
 @end

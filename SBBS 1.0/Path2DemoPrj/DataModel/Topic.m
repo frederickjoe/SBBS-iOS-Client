@@ -28,7 +28,7 @@
 @synthesize quoter; //引用内容的作者
 @synthesize last_author; //最后回复用户
 @synthesize last_time; //最后恢复时间
-
+@synthesize attachments;//附件
 
 - (id)init
 {
