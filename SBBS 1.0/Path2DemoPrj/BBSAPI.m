@@ -789,8 +789,8 @@
     {
         imageData = UIImageJPEGRepresentation(image, 0.6);
     }
-    else if ([[string substringFromIndex:37]isEqual:@"GIF"])
-    {//gif图片会转换为png
+    else
+    {//其他图片会转换为png
         imageData = UIImagePNGRepresentation((UIImage*)image);
     }
     
