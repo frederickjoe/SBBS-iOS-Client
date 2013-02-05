@@ -20,6 +20,7 @@
 #import "WBUtil.h"
 #import "BBSAPI.h"
 #import "UserInfoViewController.h"
+#import "AttachmentsViewController.h"
 
 @interface SingleTopicViewController : UIViewController<TimeScrollerDelegate, MBProgressHUDDelegate, QuadCurveMenuDelegate, UIActionSheetDelegate>
 {

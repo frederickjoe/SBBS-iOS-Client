@@ -39,7 +39,7 @@
 
 -(IBAction)done:(id)sender
 {
-    [mDelegate dismissAboutView];
+    //[mDelegate dismissAboutView];
 }
 
 

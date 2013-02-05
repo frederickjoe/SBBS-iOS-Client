@@ -41,6 +41,15 @@
 		264FECE814A1840E001C15B3 /* icon-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 264FECCA14A18389001C15B3 /* icon-star@2x.png */; };
 		264FECEA14A18427001C15B3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264FECE914A18427001C15B3 /* QuartzCore.framework */; };
 		3E62D7F216B799A9008CA1FE /* Attachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E62D7F116B799A8008CA1FE /* Attachment.m */; };
+		3E69013E16BBADF50054012C /* AttImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E69013C16BBADF50054012C /* AttImageViewController.m */; };
+		3E69013F16BBADF50054012C /* AttImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E69013D16BBADF50054012C /* AttImageViewController.xib */; };
+		3E69014116BCA62F0054012C /* attachment_notifier.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E69014016BCA62F0054012C /* attachment_notifier.png */; };
+		3E69014716BE08300054012C /* AttImageWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E69014516BE08300054012C /* AttImageWebViewController.m */; };
+		3E69014816BE08300054012C /* AttImageWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E69014616BE08300054012C /* AttImageWebViewController.xib */; };
+		3E94581916B7C2400048C987 /* AttachmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E94581716B7C2400048C987 /* AttachmentsViewController.m */; };
+		3E94581A16B7C2400048C987 /* AttachmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E94581816B7C2400048C987 /* AttachmentsViewController.xib */; };
+		3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA685E16BE5CF600137E99 /* UploadAttachmentsViewController.m */; };
+		3EDA686116BE5CF600137E99 /* UploadAttachmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EDA685F16BE5CF600137E99 /* UploadAttachmentsViewController.xib */; };
 		E90571C91582419C0067E35B /* TimeScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = E90571C81582419C0067E35B /* TimeScroller.m */; };
 		E905990C157EF31F007EE2D2 /* MailsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E905990A157EF31F007EE2D2 /* MailsViewCell.m */; };
 		E905990D157EF31F007EE2D2 /* MailsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E905990B157EF31F007EE2D2 /* MailsViewCell.xib */; };
@@ -202,6 +211,19 @@
 		264FECE914A18427001C15B3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3E62D7F016B799A8008CA1FE /* Attachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attachment.h; sourceTree = "<group>"; };
 		3E62D7F116B799A8008CA1FE /* Attachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attachment.m; sourceTree = "<group>"; };
+		3E69013B16BBADF50054012C /* AttImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttImageViewController.h; sourceTree = "<group>"; };
+		3E69013C16BBADF50054012C /* AttImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttImageViewController.m; sourceTree = "<group>"; };
+		3E69013D16BBADF50054012C /* AttImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttImageViewController.xib; sourceTree = "<group>"; };
+		3E69014016BCA62F0054012C /* attachment_notifier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attachment_notifier.png; sourceTree = "<group>"; };
+		3E69014416BE08300054012C /* AttImageWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttImageWebViewController.h; sourceTree = "<group>"; };
+		3E69014516BE08300054012C /* AttImageWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttImageWebViewController.m; sourceTree = "<group>"; };
+		3E69014616BE08300054012C /* AttImageWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttImageWebViewController.xib; sourceTree = "<group>"; };
+		3E94581616B7C2400048C987 /* AttachmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentsViewController.h; sourceTree = "<group>"; };
+		3E94581716B7C2400048C987 /* AttachmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentsViewController.m; sourceTree = "<group>"; };
+		3E94581816B7C2400048C987 /* AttachmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttachmentsViewController.xib; sourceTree = "<group>"; };
+		3EDA685D16BE5CF600137E99 /* UploadAttachmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadAttachmentsViewController.h; sourceTree = "<group>"; };
+		3EDA685E16BE5CF600137E99 /* UploadAttachmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadAttachmentsViewController.m; sourceTree = "<group>"; };
+		3EDA685F16BE5CF600137E99 /* UploadAttachmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UploadAttachmentsViewController.xib; sourceTree = "<group>"; };
 		CE8DDB761498E4BB00B0DDD0 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		CE8DDB771498E4BB00B0DDD0 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		CE8DDB781498E4BB00B0DDD0 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -426,6 +448,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E69013A16BBADAC0054012C /* AttImageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3E69013B16BBADF50054012C /* AttImageViewController.h */,
+				3E69013C16BBADF50054012C /* AttImageViewController.m */,
+				3E69013D16BBADF50054012C /* AttImageViewController.xib */,
+			);
+			name = AttImageViewController;
+			sourceTree = "<group>";
+		};
+		3E69014316BE08030054012C /* AttImageWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3E69014416BE08300054012C /* AttImageWebViewController.h */,
+				3E69014516BE08300054012C /* AttImageWebViewController.m */,
+				3E69014616BE08300054012C /* AttImageWebViewController.xib */,
+			);
+			name = AttImageWebViewController;
+			sourceTree = "<group>";
+		};
+		3E94581416B7C1B60048C987 /* AttachmentsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3E94581616B7C2400048C987 /* AttachmentsViewController.h */,
+				3E94581716B7C2400048C987 /* AttachmentsViewController.m */,
+				3E94581816B7C2400048C987 /* AttachmentsViewController.xib */,
+			);
+			name = AttachmentsViewController;
+			sourceTree = "<group>";
+		};
+		3EDA685C16BE5CC400137E99 /* UploadAttachmentsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3EDA685D16BE5CF600137E99 /* UploadAttachmentsViewController.h */,
+				3EDA685E16BE5CF600137E99 /* UploadAttachmentsViewController.m */,
+				3EDA685F16BE5CF600137E99 /* UploadAttachmentsViewController.xib */,
+			);
+			name = UploadAttachmentsViewController;
+			sourceTree = "<group>";
+		};
 		CEB1254E1498D519008A4B70 = {
 			isa = PBXGroup;
 			children = (
@@ -547,6 +609,7 @@
 		E90BDC6C157DC87F00AB1567 /* PostTopicViewController */ = {
 			isa = PBXGroup;
 			children = (
+				3EDA685C16BE5CC400137E99 /* UploadAttachmentsViewController */,
 				E90BDC6D157DC8A000AB1567 /* PostTopicViewController.h */,
 				E90BDC6E157DC8A000AB1567 /* PostTopicViewController.m */,
 				E90BDC6F157DC8A000AB1567 /* PostTopicViewController.xib */,
@@ -705,8 +768,11 @@
 				CE8DDB771498E4BB00B0DDD0 /* HomeViewController.m */,
 				CE8DDB781498E4BB00B0DDD0 /* HomeViewController.xib */,
 				E93DE82915806B3C00D763D2 /* NotificationViewController */,
+				3E69014316BE08030054012C /* AttImageWebViewController */,
+				3E69013A16BBADAC0054012C /* AttImageViewController */,
 				E90BDC66157DA95E00AB1567 /* UserInfoViewController */,
 				E973E5EE154C08A1004412CD /* TopTenView */,
+				3E94581416B7C1B60048C987 /* AttachmentsViewController */,
 				E9E9A9F3154AFF9D005D65E5 /* TopicsViewController */,
 				E973E651154C5B80004412CD /* SingleTopicView */,
 				E92FE76C157E7CCB002E6747 /* MailsViewController */,
@@ -936,6 +1002,7 @@
 				E927A582158050B3004D06C1 /* postnew.png */,
 				E927A583158050B3004D06C1 /* postnew@2x.png */,
 				E9B7608A157FB5B700952D15 /* writenew@2x.png */,
+				3E69014016BCA62F0054012C /* attachment_notifier.png */,
 				E9B7608B157FB5B700952D15 /* home@2x.png */,
 				E9B7608C157FB5B700952D15 /* refresh@2x.png */,
 				E9B7608D157FB5B700952D15 /* comment@2x.png */,
@@ -1180,6 +1247,11 @@
 				E9AA79361581DE71003C35B1 /* lightbuttonnormal@2x.png in Resources */,
 				E9064E4115851EC000A5D2FE /* headerlogo.png in Resources */,
 				E9E2BE7F15883D520050709A /* icon@2x.png in Resources */,
+				3E94581A16B7C2400048C987 /* AttachmentsViewController.xib in Resources */,
+				3E69013F16BBADF50054012C /* AttImageViewController.xib in Resources */,
+				3E69014116BCA62F0054012C /* attachment_notifier.png in Resources */,
+				3E69014816BE08300054012C /* AttImageWebViewController.xib in Resources */,
+				3EDA686116BE5CF600137E99 /* UploadAttachmentsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,6 +1329,10 @@
 				E96C07C915817A1600F1AFA4 /* AddPostUserViewController.m in Sources */,
 				E90571C91582419C0067E35B /* TimeScroller.m in Sources */,
 				3E62D7F216B799A9008CA1FE /* Attachment.m in Sources */,
+				3E94581916B7C2400048C987 /* AttachmentsViewController.m in Sources */,
+				3E69013E16BBADF50054012C /* AttImageViewController.m in Sources */,
+				3E69014716BE08300054012C /* AttImageWebViewController.m in Sources */,
+				3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1269,8 +1345,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Path2DemoPrj/虎踞龙蟠-Prefix.pch";
 				INFOPLIST_FILE = "Path2DemoPrj copy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "虎踞龙蟠 copy";
+				"SDKROOT[arch=*]" = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1281,8 +1359,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Path2DemoPrj/虎踞龙蟠-Prefix.pch";
 				INFOPLIST_FILE = "Path2DemoPrj copy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "虎踞龙蟠 copy";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1292,8 +1371,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaobo Zhang (9LWN76ZH4U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiaobo Zhang (9LWN76ZH4U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1307,9 +1386,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "F538FC5D-DA89-41B3-9058-C6CD8BD5A164";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F538FC5D-DA89-41B3-9058-C6CD8BD5A164";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1319,18 +1398,18 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaobo Zhang (9LWN76ZH4U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiaobo Zhang (9LWN76ZH4U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "F538FC5D-DA89-41B3-9058-C6CD8BD5A164";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F538FC5D-DA89-41B3-9058-C6CD8BD5A164";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

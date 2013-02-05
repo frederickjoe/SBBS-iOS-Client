@@ -325,6 +325,8 @@
             }
             ///////////////////
             topic.attachments = attArray;
+            ////////modified by joe//////
+            [attArray release];
             topic.ID = ID;
             topic.gID = gID;
             topic.reid = reid;
@@ -458,6 +460,41 @@
         return nil;
     }
     return nil;
+}
+
++(NSArray *)parseAttachments:(NSDictionary *)attDic
+{
+    BOOL success = [[attDic objectForKey:@"success"] boolValue];
+    NSMutableArray *attArray=[[NSMutableArray alloc] init];
+    if (success) {
+    
+        for (int j=0;  j<[[attDic objectForKey:@"attachments"]count];j++) {
+            Attachment *attElement=[[Attachment alloc]init];
+            [attElement setAttFileName:[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"filename"]];
+            
+            [attElement setAttId:[[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"id"] intValue]];
+            
+            [attElement setAttPos:[[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"pos"] intValue]];
+            
+            [attElement setAttSize:[[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"size"] intValue]];
+            
+            [attElement setAttUrl:[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"url"]];
+            
+            [attArray addObject:attElement];
+            [attElement release];
+        }
+        
+        return [attArray autorelease];
+
+    }
+    else
+    {
+        //NSLog(@"error:%@",[attDic objectForKey:@"error"]);
+        
+        return nil;
+    }
+    
+    
 }
 @end
 

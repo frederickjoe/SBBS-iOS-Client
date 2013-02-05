@@ -366,6 +366,8 @@
             tableTitles2 = new;
             [tableTitles2 retain];
         }
+        ////modified by joe//////
+        [new release];
         [mainTableView reloadData];
     }
 }

@@ -30,7 +30,8 @@
     
     NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:CC_SHA1_DIGEST_LENGTH];
     NSString *hash = [GTMBase64 stringByEncodingData:HMAC];//base64 编码。
-    
+    ///////modified by joe//////
+    [HMAC release];
     return hash;
 }
 

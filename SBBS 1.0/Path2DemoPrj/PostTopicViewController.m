@@ -13,7 +13,7 @@
 @synthesize boardName;
 @synthesize postType;
 @synthesize mDelegate;
-
+@synthesize attList;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -21,6 +21,12 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)passValue:(NSArray *)value
+{
+    attList = value;
+    //NSLog(@"the get value is %@", value);
 }
 
 - (void)viewDidLoad
@@ -38,6 +44,10 @@
         [postTitleCount setText:[NSString stringWithFormat:@"%i", [postTitle.text length]]];
         [sendButton setEnabled:NO];
     }
+    
+    ////////设置附件表///////////
+    attList=[rootTopic.attachments copy];
+    ///////////////////////////
     if (postType == 1) {
         [topTitleLabel setText:@"回帖"];
         if ([rootTopic.title length] >=4 && [[rootTopic.title substringToIndex:4] isEqualToString:@"Re: "]) {
@@ -139,6 +149,51 @@
     }
 }
 
-
+-(IBAction)operateAtt:(id)sender
+{
+    if (postType==0) {
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] initWithNibName:@"UploadAttachmentsViewController" bundle:nil];
+        uavc.postType=0;//新帖
+        uavc.mDelegate = appDelegate.homeViewController;
+        //[self presentModalViewController:postTopicViewController animated:YES];
+        //HomeViewController * home = appDelegate.homeViewController;
+        [self presentModalViewController:uavc animated:YES];
+        [uavc release];
+    }
+    
+    else if(postType==2)
+    {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] initWithNibName:@"UploadAttachmentsViewController" bundle:nil];
+        uavc.postType=2;//修改贴
+        uavc.attList=attList;
+        
+        uavc.mDelegate=self;
+        uavc.postId=rootTopic.ID;
+        uavc.board=rootTopic.board;
+        //[self presentModalViewController:postTopicViewController animated:YES];
+        //HomeViewController * home = appDelegate.homeViewController;
+        [self presentModalViewController:uavc animated:YES];
+        [uavc release];
+    }
+    
+    else
+    {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] initWithNibName:@"UploadAttachmentsViewController" bundle:nil];
+        uavc.postType=1;//回复
+        //uavc.attList=attList;
+        uavc.mDelegate = self;
+        uavc.postId=rootTopic.ID;
+        uavc.board=rootTopic.board;
+        //[self presentModalViewController:postTopicViewController animated:YES];
+        //HomeViewController * home = appDelegate.homeViewController;
+        [self presentModalViewController:uavc animated:YES];
+        [uavc release];
+    }
+ 
+}
 
 @end

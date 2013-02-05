@@ -14,15 +14,16 @@
     IBOutlet UILabel * authorLabel;
     IBOutlet UITextView * contentTextView;
     IBOutlet UILabel * contentLabel;
-    
+    IBOutlet UIImageView * attNotifier;
     int ID;
     NSDate * time;
     NSString * title;
     NSString * content;
     NSString * author;
-
+    BOOL attExist;
     int read;
 }
+@property(nonatomic, assign)BOOL attExist;
 @property(nonatomic, assign)int ID;
 @property(nonatomic, retain)NSDate * time;
 @property(nonatomic, retain)NSString * title;

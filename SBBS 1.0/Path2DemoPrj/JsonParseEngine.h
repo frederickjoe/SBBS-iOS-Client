@@ -26,7 +26,7 @@
 +(NSArray *)parseTopics:(NSDictionary *)topicsDictionary;
 +(NSArray *)parseSearchTopics:(NSDictionary *)topicsDictionary;
 
-
++(NSArray *)parseAttachments:(NSDictionary *)attDic;
 +(NSArray *)parseSingleTopic:(NSDictionary *)topicsDictionary;
 +(User *)parseUserInfo:(NSDictionary *)topicsDictionary;
 

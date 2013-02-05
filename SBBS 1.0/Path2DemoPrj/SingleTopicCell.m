@@ -9,6 +9,7 @@
 #import "SingleTopicCell.h"
 
 @implementation SingleTopicCell
+@synthesize attExist;
 @synthesize ID;
 @synthesize time;
 @synthesize title;
@@ -37,7 +38,13 @@
     [articleTitleLabel setText:title];
     [authorLabel setText:author];
     [contentLabel setText:content];
-    
+    if (attExist) {
+        [attNotifier setHidden:NO];
+    }
+    else
+    {
+        [attNotifier setHidden:YES];
+    }
     UIFont *font = [UIFont systemFontOfSize:15.0];
     CGSize size2 = [content sizeWithFont:font constrainedToSize:CGSizeMake(290, 10000) lineBreakMode:UILineBreakModeWordWrap];
     

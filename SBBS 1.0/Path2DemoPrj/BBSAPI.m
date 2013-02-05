@@ -679,4 +679,175 @@
     BOOL needsConnection = flags & kSCNetworkFlagsConnectionRequired;
     return (isReachable && !needsConnection) ? YES : NO;
 }
+
++(UIImage *)getRemoteImage:(NSURL *)url
+{
+    if(![BBSAPI isNetworkReachable])
+    {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+        return nil;
+    }
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    // 把url的结果返回给response
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    UIImage *img=[[UIImage alloc] initWithData:response];
+    return [img autorelease];
+}
+
++(NSArray *)postImageto:(NSURL *)url withImage:(UIImage *)img andToken:(NSString *)token
+{
+    if(![BBSAPI isNetworkReachable])
+    {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+        return nil;
+    }
+    
+    //NSMutableURLRequest *myRequest=[NSMutableURLRequest requestWithURL:url];//创建一个指向目的网站的请求
+    NSData *imageData=UIImageJPEGRepresentation(img, 90);//一个图片数据
+    
+    NSMutableURLRequest *request=[[[NSMutableURLRequest alloc] init] autorelease];//创建请求
+    [request setURL:url];
+    
+    NSString *boundary=@"0xKhTmLbOuNdArY";
+    NSString *contentType=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",boundary];//定义表格数据
+    
+    [request setValue:contentType forHTTPHeaderField:@"Content-Type"];//定义内容类型
+    
+    [request setHTTPMethod:@"POST"];//方法为post
+    
+    NSMutableData *body=[NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];//字段开始
+    
+    [body appendData:[@"Content-Disposition:form-data; name=\"file\"\r\n\r\n\"up.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];//定义名称<input type="file" name="file">
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Disposition:form-data; name=\"file\" filename=\"up.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type:image/jpeg\r\nContent-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    //这一句很重要，说明了我们接下来要上传的是图片
+    [body appendData:imageData];//将图片数据加载进去
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary]dataUsingEncoding:NSUTF8StringEncoding]];//结束
+    
+    [request setHTTPBody:body];
+    
+    NSURLResponse *response;
+    
+    NSData *returnData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    //NSString *returnString=[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    NSDictionary *attDic = [returnData objectFromJSONData];
+    NSArray * attArray=[[JsonParseEngine parseAttachments:attDic] retain];
+    //NSLog(@"%@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    if (attArray!=nil) {
+        return [attArray autorelease];
+    }
+    else
+    {
+        [attArray release];
+        return nil;
+    }
+
+}
+
+
+
++(NSArray* )postImg:(NSString *)string Image:(UIImage *)image toUrl:(NSURL *)url
+{
+ 
+    if(![BBSAPI isNetworkReachable])
+    {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+        return nil;
+    }
+    NSString *kStringBoundary=@"0xKhTmLbOuNdArY";
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setTimeoutInterval:2000];
+    [request setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kStringBoundary] forHTTPHeaderField:@"Content-Type"];
+    
+    NSMutableData *body = [NSMutableData data];
+    NSString *bodyPrefixString   = [NSString stringWithFormat:@"--%@\r\n", kStringBoundary];
+    NSString *bodySuffixString   = [NSString stringWithFormat:@"\r\n--%@--\r\n", kStringBoundary];
+    
+    [self utfAppendBody:body data:bodyPrefixString];
+    
+    [self utfAppendBody:body data:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n",@"status",string]];
+    
+	[self utfAppendBody:body data:bodyPrefixString];
+    
+    [self utfAppendBody:body data:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n",@"file",@"pic.png"]];
+    
+	[self utfAppendBody:body data:bodyPrefixString];
+    NSData* imageData;
+    if ([[string substringFromIndex:37]isEqual:@"PNG"]) {
+        imageData = UIImagePNGRepresentation((UIImage*)image);
+    }
+    else if ([[string substringFromIndex:37]isEqual:@"JPG"])
+    {
+        imageData = UIImageJPEGRepresentation(image, 0.6);
+    }
+    else if ([[string substringFromIndex:37]isEqual:@"GIF"])
+    {//gif图片会转换为png
+        imageData = UIImagePNGRepresentation((UIImage*)image);
+    }
+    
+    
+    
+    [self utfAppendBody:body data:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", @"file", string]];
+    [self utfAppendBody:body data:@"Content-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    [body appendData:imageData];
+    
+    [self utfAppendBody:body data:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n", @"status"]];
+    [self utfAppendBody:body data:@"Content-Type: content/unknown\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    [body appendData:(NSData*)[string dataUsingEncoding:NSUTF8StringEncoding]];
+    [self utfAppendBody:body data:bodySuffixString];
+    
+    [request setHTTPBody:body];
+    NSData* returnData =  [NSURLConnection sendSynchronousRequest:request
+                                              returningResponse:nil error:nil];
+    [request release];
+    NSDictionary *attDic = [returnData objectFromJSONData];
+    NSArray * attArray=[[JsonParseEngine parseAttachments:attDic] retain];
+    //NSLog(@"%@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    if (attArray!=nil) {
+        return [attArray autorelease];
+    }
+    else
+    {
+        [attArray release];
+        return nil;
+    }
+
+}
+
+
++(void)utfAppendBody:(NSMutableData *)body data:(NSString *)data {
+	[body appendData:[data dataUsingEncoding:NSUTF8StringEncoding]];
+}
+
++(NSArray*)delImg:(NSURL *)url
+{
+    if(![BBSAPI isNetworkReachable])
+    {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+        return nil;
+    }
+    NSData * feedback = [NSData dataWithContentsOfURL:url];
+    NSDictionary *attDic = [feedback objectFromJSONData];
+    NSArray *attArray=[[JsonParseEngine parseAttachments:attDic] retain];
+    if (attArray!=nil) {
+        return [attArray autorelease];
+    }
+    else
+    {
+        [attArray release];
+        return nil;
+    }
+}
+
 @end

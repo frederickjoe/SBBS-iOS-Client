@@ -24,13 +24,13 @@
 
 -(void)refreshView
 {
-    [ID setText:[NSString stringWithFormat:@"%@", user.ID, user.name]];
+    [ID setText:[NSString stringWithFormat:@"%@", user.ID]];
     [name setText:[NSString stringWithFormat:@"%@", user.name]];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
     NSString * lastloginstring = [dateFormatter stringFromDate:user.lastlogin];
-    
+    [dateFormatter release];
     [lastlogin setText:[NSString stringWithFormat:@"%@",lastloginstring]];
     
     [level setText:[NSString stringWithFormat:@"%@", user.level]];

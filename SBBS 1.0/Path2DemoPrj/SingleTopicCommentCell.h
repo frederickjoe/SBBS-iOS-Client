@@ -14,6 +14,7 @@
     IBOutlet UILabel * contentTextView;
     IBOutlet UILabel * commentToTextView;
     IBOutlet UILabel * loushu;
+    IBOutlet UIImageView * attNotifier;
     int ID;
     NSDate * time;
     
@@ -21,11 +22,12 @@
     NSString * author;
     NSString * quoter;
     NSString * quote;
-    
+    BOOL attExist;
     int read;
     
     int num;
 }
+@property(nonatomic, assign)BOOL attExist;
 @property(nonatomic, assign)int ID;
 @property(nonatomic, retain)NSDate * time;
 @property(nonatomic, retain)NSString * author;

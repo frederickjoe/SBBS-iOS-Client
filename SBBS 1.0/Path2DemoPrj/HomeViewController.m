@@ -187,6 +187,8 @@
     SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithNibName:@"SingleTopicViewController" bundle:nil];
     singleTopicViewController.rootTopic = topic;
     [self.navigationController pushViewController:singleTopicViewController animated:YES];
+    ////modified by joe//////
+    [singleTopicViewController release];
 }
 
 

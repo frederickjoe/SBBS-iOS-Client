@@ -17,7 +17,7 @@
 @synthesize quote;
 @synthesize read;
 @synthesize num;
-
+@synthesize attExist;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -42,13 +42,19 @@
     
     [authorLabel setText:author];
     [contentTextView setText:content];
-    
+    if (attExist) {
+        [attNotifier setHidden:NO];
+    }
+    else
+    {
+        [attNotifier setHidden:YES];
+    }
     CGSize size1 = [content sizeWithFont:font constrainedToSize:CGSizeMake(290, 10000) lineBreakMode:UILineBreakModeWordWrap];
     [contentTextView setFrame:CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y, contentTextView.frame.size.width, size1.height)];
     
     UIFont *font2 = [UIFont systemFontOfSize:12.0];
     CGSize size2 = [[NSString stringWithFormat:@"回复:%@\n%@",quoter, quote] sizeWithFont:font2 constrainedToSize:CGSizeMake(290, 10000) lineBreakMode:UILineBreakModeWordWrap];
-    NSLog(@"the size1.height:%f\n the size2.height:%f",size1.height,size2.height);
+    //NSLog(@"the size1.height:%f\n the size2.height:%f",size1.height,size2.height);
     [commentToTextView setText:[NSString stringWithFormat:@"回复:%@\n%@",quoter, quote]];
     [commentToTextView setFrame:CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y+size1.height+10, commentToTextView.frame.size.width, size2.height)];
     

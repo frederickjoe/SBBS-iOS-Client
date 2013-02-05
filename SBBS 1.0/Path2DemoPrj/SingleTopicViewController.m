@@ -72,7 +72,7 @@
 -(IBAction)back:(id)sender
 {
     if (isForShowNotification) {
-        [mDelegate backAndRefresh];
+        //[mDelegate ];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -142,6 +142,13 @@
         cell.author = topic.author;
         cell.title = topic.title;
         cell.content = topic.content;
+        if ([[topic attachments] count]==0) {
+            cell.attExist=NO;
+        }
+        else
+        {
+            cell.attExist=YES;
+        }
         [cell setReadyToShow];
         return cell;
     }
@@ -154,6 +161,7 @@
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
         Topic * topic = [topicsArray objectAtIndex:indexPath.row];
+        
         cell.ID = topic.ID;
         cell.time = topic.time;
         cell.author = topic.author;
@@ -161,6 +169,16 @@
         cell.quoter = topic.quoter;
         cell.content = topic.content;
         cell.num = indexPath.row;
+        
+        cell.content = topic.content;
+        if ([[topic attachments] count]==0) {
+            cell.attExist=NO;
+        }
+        else
+        {
+            cell.attExist=YES;
+        }
+
         [cell setReadyToShow];
         return cell;
     }
@@ -394,6 +412,8 @@
         [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
         [actionSheet release];
     }
+    //////modified by joe//////
+    [string release];
 }
 - (void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -445,10 +465,24 @@
     if(buttonIndex == 2 && ![myBBS.mySelf.ID isEqualToString:selectTopic.author])
     {//当前话题作者不是自己，2号即为查看附件
         //查看附件的代码
-        NSLog(@"ViewAtt not for Self");
+        //NSLog(@"ViewAtt not for Self");
+        AttachmentsViewController* attViewController = [[AttachmentsViewController alloc] initWithNibName:@"AttachmentsViewController" bundle:nil];
+        attViewController.attList = selectTopic.attachments;
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        HomeViewController * home = appDelegate.homeViewController;
+        [home.navigationController pushViewController:attViewController animated:YES];
+        [attViewController release];
     }
     if (buttonIndex ==3 && [myBBS.mySelf.ID isEqualToString:selectTopic.author]) {
-        NSLog(@"View Att for Self");
+        //NSLog(@"View Att for Self");
+        AttachmentsViewController* attViewController = [[AttachmentsViewController alloc] initWithNibName:@"AttachmentsViewController" bundle:nil];
+        attViewController.attList = selectTopic.attachments;
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        HomeViewController * home = appDelegate.homeViewController;
+        [home.navigationController pushViewController:attViewController animated:YES];
+        [attViewController release];
     }
     
 }

@@ -11,6 +11,11 @@
 #import "JsonParseEngine.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import <netinet/in.h>
+@protocol UIViewPassValueDelegate
+
+- (void)passValue:(NSArray *)value;
+
+@end
 
 @interface BBSAPI : NSObject
 
@@ -36,6 +41,11 @@
 +(NSArray *)allFavSections:(NSString *)token;
 +(NSArray *)onlineFriends:(NSString *)token;
 
+
++(NSArray *)postImageto:(NSURL *)url withImage:(UIImage *)img andToken:(NSString*)token;
++(NSArray* )postImg:(NSString *)string Image:(UIImage *)image toUrl:(NSURL *)url;
++(NSArray *)delImg:(NSURL*)url;
+
 +(NSArray *)allFriends:(NSString *)token;
 +(BOOL)deletFriend:(NSString *)token ID:(NSString *)ID;
 +(BOOL)addFriend:(NSString *)token ID:(NSString *)ID;
@@ -51,4 +61,5 @@
 
 +(BOOL)postTopic:(NSString *)token Board:(NSString *)board Title:(NSString *)title Content:(NSString *)content Reid:(int)reid;
 +(BOOL)editTopic:(NSString *)token Board:(NSString *)board Title:(NSString *)title Content:(NSString *)content Reid:(int)reid;
++(UIImage *)getRemoteImage:(NSURL*)url withImage:(UIImage *)img;
 @end
