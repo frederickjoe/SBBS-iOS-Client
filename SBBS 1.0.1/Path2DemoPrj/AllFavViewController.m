@@ -34,6 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    [self.view setFrame:CGRectMake(0, 0, 290, rect.size.height)];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
     [topTitle setText:topTitleString];
     

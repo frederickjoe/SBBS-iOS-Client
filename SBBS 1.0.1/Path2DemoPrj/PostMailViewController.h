@@ -22,6 +22,7 @@
     IBOutlet UITextField * postTitle;
     IBOutlet UILabel * postTitleCount;
     
+    IBOutlet UIImageView * postBack;
     IBOutlet UITextView * postContent;
     
     MBProgressHUD * HUD;

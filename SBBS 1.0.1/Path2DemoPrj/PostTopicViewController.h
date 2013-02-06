@@ -20,6 +20,7 @@
     IBOutlet UILabel * postTitleCount;
     IBOutlet UIButton * sendButton;
     
+    IBOutlet UIImageView * postBack;
     IBOutlet UITextView * postContent;
     MBProgressHUD * HUD;
     Topic * rootTopic;

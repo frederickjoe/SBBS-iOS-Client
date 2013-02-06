@@ -20,6 +20,7 @@
     
     id<QuadCurveMenuDelegate> _delegate;
 
+    CGPoint STARTPOINT;
 }
 @property (nonatomic, copy) NSArray *menusArray;
 @property (nonatomic, getter = isExpanding)     BOOL expanding;

@@ -27,6 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    [self.view setFrame:CGRectMake(0, 0, 290, rect.size.height)];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
     mainTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
     // Do any additional setup after loading the view from its nib.

@@ -19,7 +19,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         isGIF = NO;
-        imageScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44, 320, 436)];
+        CGRect rect = [[UIScreen mainScreen] bounds];
+        imageScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44, 320, rect.size.height-64)];
         imageScrollView.directionalLockEnabled = NO;
         imageScrollView.decelerationRate = 0.0;
         imageScrollView.backgroundColor = [UIColor clearColor]; 
@@ -31,8 +32,7 @@
         [imageScrollView setMinimumZoomScale:1.0];
         [imageScrollView setMaximumZoomScale:3.0];
         [self.view addSubview:imageScrollView];
-        
-        imageRealView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
+        imageRealView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, rect.size.height-64)];
         [imageRealView setContentMode:UIViewContentModeScaleAspectFit];
         [imageScrollView addSubview:imageRealView];
         
@@ -46,7 +46,8 @@
 {
     [imageLabel setText:imageData.title];
     if (isGIF) {
-        UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, 320, 416)];
+        CGRect rect = [[UIScreen mainScreen] bounds];
+        UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, 320, rect.size.height - 64)];
         [self.view addSubview:webView];
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:imageData.url]]];
     }
@@ -68,6 +69,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     // Do any additional setup after loading the view from its nib.
 }
 

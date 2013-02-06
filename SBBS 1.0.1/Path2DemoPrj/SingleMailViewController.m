@@ -56,6 +56,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
+    [realScrollView setFrame:CGRectMake(0, 44, rect.size.width, rect.size.height - 64)];
     scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
     if (rootMail.type == 0)
         [topTitle setText:@"收件箱"];

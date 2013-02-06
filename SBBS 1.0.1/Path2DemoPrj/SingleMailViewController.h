@@ -19,6 +19,7 @@
 
 @interface SingleMailViewController : UIViewController<MBProgressHUDDelegate>
 {
+    IBOutlet UIScrollView * realScrollView;
     Mail * rootMail;
     Mail * mail;
     CustomTableView * customTableView;

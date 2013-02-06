@@ -12,7 +12,7 @@
 #define NEARRADIUS 110.0f
 #define ENDRADIUS 120.0f
 #define FARRADIUS 140.0f
-#define STARTPOINT CGPointMake(20, 424)
+//#define STARTPOINT CGPointMake(20, 424)
 #define TIMEOFFSET 0.026f
 #define ROTATEANGLE 0
 #define MENUWHOLEANGLE  M_PI*3/5
@@ -42,8 +42,10 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        CGRect rect = [[UIScreen mainScreen] bounds];
+        STARTPOINT = CGPointMake(20, rect.size.height-56);
         
+        self.backgroundColor = [UIColor clearColor];
         // layout menus
         self.menusArray = aMenusArray;
         
@@ -53,6 +55,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
                                            ContentImage:[UIImage imageNamed:@"icon-plus.png"] 
                                 highlightedContentImage:[UIImage imageNamed:@"icon-plus-highlighted.png"]];
         _addButton.delegate = self;
+        STARTPOINT = 
         _addButton.center = STARTPOINT;
         [self addSubview:_addButton];
     }

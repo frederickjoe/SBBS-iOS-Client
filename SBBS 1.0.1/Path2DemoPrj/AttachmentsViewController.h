@@ -13,11 +13,13 @@
 #import "AttImageWebViewController.h"
 #import "SingleImageWithScrollViewController.h"
 
-@interface AttachmentsViewController : UIViewController<UIDocumentInteractionControllerDelegate>
+@interface AttachmentsViewController : UIViewController<UIDocumentInteractionControllerDelegate, UIAlertViewDelegate>
 {
     NSArray * attList;
     IBOutlet UITableView * attTable;
+    NSString * openString;
 }
 @property(nonatomic, strong)NSArray *attList;
+@property(nonatomic, retain)NSString * openString;
 -(IBAction)back:(id)sender;
 @end

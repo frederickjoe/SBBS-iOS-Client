@@ -31,8 +31,8 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
-	<key>UILaunchImageFile</key>
-	<string>launch.png</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

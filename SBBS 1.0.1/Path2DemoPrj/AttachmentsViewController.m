@@ -11,6 +11,8 @@
 
 @implementation AttachmentsViewController
 @synthesize attList;
+@synthesize openString;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -23,6 +25,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     attTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
 }
 
@@ -67,14 +71,8 @@
         [singleImageWithScrollViewController release];
     }
     else{
-        /*
-        UIDocumentInteractionController * doc = [UIDocumentInteractionController  interactionControllerWithURL:[NSURL URLWithString:curAttUrlString]];
-        doc.delegate =self;
-        CGRect navRect = CGRectMake(0, 0, 320, 400);
-        [doc presentOptionsMenuFromRect:navRect inView:self.view  animated:YES];
-        */
-        
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无法打开此附件" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
+        openString = curAttUrlString;
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"用Safari打开此附件" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好",nil];
         [alert show];
         [alert release];
     }
@@ -130,4 +128,18 @@
     }
 }
 
+#pragma mark -
+#pragma mark UIAlertView
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch(buttonIndex){
+        case 0:
+            break;
+        case 1:
+        {
+            NSURL* url = [[NSURL alloc] initWithString:openString];
+            [[UIApplication sharedApplication] openURL:[url autorelease]];
+        }
+            break;
+    }
+}
 @end

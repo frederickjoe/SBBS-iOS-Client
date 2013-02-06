@@ -40,9 +40,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.myBBS = [[[MyBBS alloc] init] autorelease];
     
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    
     // left view (nav)
     [self.leftnavController.navigationBar setHidden:YES];
-    [self.leftnavController.view setFrame:CGRectMake(0, 20, 320, 460)];
+    [self.leftnavController.view setFrame:CGRectMake(0, 20, 320, rect.size.height - 20)];
     [self.window addSubview:self.leftnavController.view];
     
     // main view (nav)
@@ -58,12 +60,16 @@
     
     [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(refreshNotification) userInfo:nil repeats:YES];
     
-    zakerLikeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 320, 460)];
-    [zakerLikeImageView setImage:[UIImage imageNamed:@"launch.png"]];
+    zakerLikeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, rect.size.height)];
+    if (rect.size.height == 568)
+        [zakerLikeImageView setImage:[UIImage imageNamed:@"Default-568h@2x.png"]];
+    else
+        [zakerLikeImageView setImage:[UIImage imageNamed:@"Default@2x.png"]];
+    
     zakerLikeImageView.layer.shadowColor = [UIColor blackColor].CGColor;
-    zakerLikeImageView.layer.shadowOpacity = 1.0f;
-    zakerLikeImageView.layer.shadowOffset = CGSizeMake(0.0, 5.0f);
-    zakerLikeImageView.layer.shadowRadius = 5.0f;
+    zakerLikeImageView.layer.shadowOpacity = 0.8f;
+    zakerLikeImageView.layer.shadowOffset = CGSizeMake(0.0, 3.0f);
+    zakerLikeImageView.layer.shadowRadius = 3.0f;
     zakerLikeImageView.layer.masksToBounds = NO;
     [zakerLikeImageView layer].shadowPath = [UIBezierPath bezierPathWithRect:[zakerLikeImageView layer].bounds].CGPath;
     [zakerLikeImageView setUserInteractionEnabled:NO];
@@ -98,10 +104,11 @@
 
 -(void)TheAnimation
 {
+    CGRect rect = [[UIScreen mainScreen] bounds];
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    [UIView setAnimationDuration:0.5];
-    [zakerLikeImageView setFrame:CGRectMake(0, -480, 320, 480)];
+    [UIView setAnimationDuration:0.8];
+    [zakerLikeImageView setFrame:CGRectMake(0, -(rect.size.height), 320, rect.size.height-20)];
     [UIView commitAnimations];
 }
 - (void)refreshNotification
