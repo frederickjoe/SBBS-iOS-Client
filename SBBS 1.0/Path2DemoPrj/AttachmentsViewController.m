@@ -23,7 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    attTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
     // Do any additional setup after loading the view from its nib.
 }
@@ -42,7 +42,10 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell=[[UITableViewCell alloc] init];
+    
     cell.textLabel.text=[[attList objectAtIndex:indexPath.row] attFileName];
+    cell.backgroundColor = [UIColor lightTextColor];
+    //[cell.textLabel setAutoresizesSubviews:YES];
     return [cell autorelease];
 }
 
@@ -50,33 +53,28 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString * curAttUrlString=[[attList objectAtIndex:indexPath.row] attUrl];
-    NSURL * url=[NSURL URLWithString:curAttUrlString];
-    
+
     if ([curAttUrlString hasSuffix:@".png"] || [curAttUrlString hasSuffix:@".jpg"] || [curAttUrlString hasSuffix:@".gif"] || [curAttUrlString hasSuffix:@".PNG"] || [curAttUrlString hasSuffix:@".JPG"] || [curAttUrlString hasSuffix:@".GIF"]) {
         
-//        AttImageViewController * attImageViewController = [[AttImageViewController alloc] initWithNibName:@"AttImageViewController" bundle:nil];
-//        attImageViewController.url=url;
-//        attImageViewController.fileName=[[attList objectAtIndex:indexPath.row] attFileName];
-//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        HomeViewController * home = appDelegate.homeViewController;
-//        [home.navigationController pushViewController:attImageViewController animated:YES];
-//        [attImageViewController release];
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        ImageData * imageData = [[ImageData alloc] init];
+        imageData.url = curAttUrlString;
+        imageData.title = [[attList objectAtIndex:indexPath.row] attFileName];
         
-        
-        
-//        AttImageWebViewController *aiwvc=[[AttImageWebViewController alloc] initWithNibName:@"AttImageWebViewController" bundle:nil];
-//        aiwvc.imgUrl=url;
-//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        HomeViewController * home = appDelegate.homeViewController;
-//        [home.navigationController pushViewController:aiwvc animated:YES];
-//        [aiwvc release];
-        [[UIApplication sharedApplication] openURL:url];
+        SingleImageWithScrollViewController * singleImageWithScrollViewController = [[SingleImageWithScrollViewController alloc] initWithNibName:@"SingleImageWithScrollViewController" bundle:nil];
+        singleImageWithScrollViewController.mDelegate = nil;
+        singleImageWithScrollViewController.imageData = imageData;
+        if ([curAttUrlString hasSuffix:@".gif"] || [curAttUrlString hasSuffix:@".GIF"])
+            singleImageWithScrollViewController.isGIF = TRUE;
+        [singleImageWithScrollViewController loadBigImageView];
+        [appDelegate.homeViewController presentViewController:singleImageWithScrollViewController animated:YES completion:nil];
+        [singleImageWithScrollViewController release];
     }
-    else
-    {
-        [[UIApplication sharedApplication] openURL:url];
+    else{
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无法打开此附件" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
     }
-    
 }
 
 -(IBAction)back:(id)sender

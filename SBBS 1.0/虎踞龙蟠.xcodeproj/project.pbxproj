@@ -175,6 +175,10 @@
 		E9F2A037154AEB7500452F09 /* Topic.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F2A036154AEB7500452F09 /* Topic.m */; };
 		E9F2A03A154AEC6E00452F09 /* Board.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F2A039154AEC6E00452F09 /* Board.m */; };
 		E9F2A03D154AEDB200452F09 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F2A03C154AEDB200452F09 /* User.m */; };
+		E9F5B8AD16C0FC0C0054517C /* SingleImageWithScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F5B8AB16C0FC0C0054517C /* SingleImageWithScrollViewController.m */; };
+		E9F5B8AE16C0FC0C0054517C /* SingleImageWithScrollViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9F5B8AC16C0FC0C0054517C /* SingleImageWithScrollViewController.xib */; };
+		E9F5B8B116C0FC630054517C /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F5B8B016C0FC630054517C /* ImageDownloader.m */; };
+		E9F5B8B516C0FC980054517C /* ImageData.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F5B8B416C0FC980054517C /* ImageData.m */; };
 		E9FEB5BE157B2BE800801E7F /* AllSectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FEB5BC157B2BE800801E7F /* AllSectionsViewController.m */; };
 		E9FEB5BF157B2BE800801E7F /* AllSectionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9FEB5BD157B2BE800801E7F /* AllSectionsViewController.xib */; };
 		E9FEB5C8157B39D800801E7F /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FEB5C6157B39D800801E7F /* AboutViewController.m */; };
@@ -424,6 +428,13 @@
 		E9F2A039154AEC6E00452F09 /* Board.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Board.m; path = DataModel/Board.m; sourceTree = "<group>"; };
 		E9F2A03B154AEDB200452F09 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = DataModel/User.h; sourceTree = "<group>"; };
 		E9F2A03C154AEDB200452F09 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = DataModel/User.m; sourceTree = "<group>"; };
+		E9F5B8AA16C0FC0C0054517C /* SingleImageWithScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleImageWithScrollViewController.h; sourceTree = "<group>"; };
+		E9F5B8AB16C0FC0C0054517C /* SingleImageWithScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleImageWithScrollViewController.m; sourceTree = "<group>"; };
+		E9F5B8AC16C0FC0C0054517C /* SingleImageWithScrollViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleImageWithScrollViewController.xib; sourceTree = "<group>"; };
+		E9F5B8AF16C0FC630054517C /* ImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
+		E9F5B8B016C0FC630054517C /* ImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
+		E9F5B8B316C0FC980054517C /* ImageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageData.h; sourceTree = "<group>"; };
+		E9F5B8B416C0FC980054517C /* ImageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageData.m; sourceTree = "<group>"; };
 		E9FEB5BB157B2BE800801E7F /* AllSectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSectionsViewController.h; sourceTree = "<group>"; };
 		E9FEB5BC157B2BE800801E7F /* AllSectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllSectionsViewController.m; sourceTree = "<group>"; };
 		E9FEB5BD157B2BE800801E7F /* AllSectionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllSectionsViewController.xib; sourceTree = "<group>"; };
@@ -474,6 +485,7 @@
 				3E94581616B7C2400048C987 /* AttachmentsViewController.h */,
 				3E94581716B7C2400048C987 /* AttachmentsViewController.m */,
 				3E94581816B7C2400048C987 /* AttachmentsViewController.xib */,
+				E9F5B8B216C0FC660054517C /* ShowAttechmentImage */,
 			);
 			name = AttachmentsViewController;
 			sourceTree = "<group>";
@@ -1085,6 +1097,20 @@
 			name = NetUnity;
 			sourceTree = "<group>";
 		};
+		E9F5B8B216C0FC660054517C /* ShowAttechmentImage */ = {
+			isa = PBXGroup;
+			children = (
+				E9F5B8B316C0FC980054517C /* ImageData.h */,
+				E9F5B8B416C0FC980054517C /* ImageData.m */,
+				E9F5B8AF16C0FC630054517C /* ImageDownloader.h */,
+				E9F5B8B016C0FC630054517C /* ImageDownloader.m */,
+				E9F5B8AA16C0FC0C0054517C /* SingleImageWithScrollViewController.h */,
+				E9F5B8AB16C0FC0C0054517C /* SingleImageWithScrollViewController.m */,
+				E9F5B8AC16C0FC0C0054517C /* SingleImageWithScrollViewController.xib */,
+			);
+			name = ShowAttechmentImage;
+			sourceTree = "<group>";
+		};
 		E9FEB5B9157B2BCA00801E7F /* AllSectionsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1252,6 +1278,7 @@
 				3E69014116BCA62F0054012C /* attachment_notifier.png in Resources */,
 				3E69014816BE08300054012C /* AttImageWebViewController.xib in Resources */,
 				3EDA686116BE5CF600137E99 /* UploadAttachmentsViewController.xib in Resources */,
+				E9F5B8AE16C0FC0C0054517C /* SingleImageWithScrollViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1333,6 +1360,9 @@
 				3E69013E16BBADF50054012C /* AttImageViewController.m in Sources */,
 				3E69014716BE08300054012C /* AttImageWebViewController.m in Sources */,
 				3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */,
+				E9F5B8AD16C0FC0C0054517C /* SingleImageWithScrollViewController.m in Sources */,
+				E9F5B8B116C0FC630054517C /* ImageDownloader.m in Sources */,
+				E9F5B8B516C0FC980054517C /* ImageData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1345,7 +1375,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Path2DemoPrj/虎踞龙蟠-Prefix.pch";
 				INFOPLIST_FILE = "Path2DemoPrj copy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "虎踞龙蟠 copy";
 				"SDKROOT[arch=*]" = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1359,7 +1389,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Path2DemoPrj/虎踞龙蟠-Prefix.pch";
 				INFOPLIST_FILE = "Path2DemoPrj copy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "虎踞龙蟠 copy";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

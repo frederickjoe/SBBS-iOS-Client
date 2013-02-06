@@ -11,6 +11,8 @@
 #import "AttImageViewController.h"
 #import "HomeViewController.h"
 #import "AttImageWebViewController.h"
+#import "SingleImageWithScrollViewController.h"
+
 @interface AttachmentsViewController : UIViewController
 {
     NSArray * attList;

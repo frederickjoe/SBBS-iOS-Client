@@ -20,23 +20,15 @@
 
 @end
 
-
 @implementation TimeScroller
-
 @synthesize delegate = _delegate;
 
-- (id)initWithDelegate:(id<TimeScrollerDelegate>)delegate {
-    
-    if (![[[[UIDevice currentDevice] systemVersion] substringToIndex:1] isEqualToString:@"5"])
+- (id)initWithDelegate:(id<TimeScrollerDelegate>)delegate {    
+    if (![[[[UIDevice currentDevice] systemVersion] substringToIndex:1] isEqualToString:@"5"] && ![[[[UIDevice currentDevice] systemVersion] substringToIndex:1] isEqualToString:@"6"])
         return nil;
     
     UIImage *background;
-    if ([[[[UIDevice currentDevice] systemVersion] substringToIndex:1] isEqualToString:@"5"]) {
-        background = [[UIImage imageNamed:@"timescroll_pointer"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 35.0f, 0.0f, 10.0f)];
-    }
-    else {
-        background = [UIImage imageNamed:@"timescroll_pointer"];
-    }
+    background = [[UIImage imageNamed:@"timescroll_pointer"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 35.0f, 0.0f, 10.0f)];
     
     self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, background.size.height)];
     if (self) {
@@ -45,25 +37,11 @@
         self.alpha = 0.0f;
         self.transform = CGAffineTransformMakeTranslation(10.0f, 0.0f);
 
-        
-        
         _backgroundView = [[UIImageView alloc] initWithImage:background];
-        
-        if ([[[[UIDevice currentDevice] systemVersion] substringToIndex:1] isEqualToString:@"5"]) {
-            _backgroundView.frame = CGRectMake(CGRectGetWidth(self.frame) - 80.0f, 0.0f, 80.0f, CGRectGetHeight(self.frame));
-        }
-        else {
-            _backgroundView.frame = CGRectMake(CGRectGetWidth(self.frame) - background.size.width, 0.0f, background.size.width, CGRectGetHeight(self.frame)); 
-        }
+        _backgroundView.frame = CGRectMake(CGRectGetWidth(self.frame) - 80.0f, 0.0f, 80.0f, CGRectGetHeight(self.frame));
         
         [self addSubview:_backgroundView];
         [_backgroundView release];
-        
-
-        
-        
-        
-        
         
         _handContainer = [[UIView alloc] initWithFrame:CGRectMake(5.0f, 4.0f, 20.0f, 20.0f)];
         [_backgroundView addSubview:_handContainer];
@@ -384,13 +362,8 @@
         _dateLabel.alpha = dateLabelAlpha;
         _timeLabel.text = timeLabelString;
         _dateLabel.text = dateLabelString;
-        
-        
-        if ([[[[UIDevice currentDevice] systemVersion] substringToIndex:1] isEqualToString:@"5"]) {
-            _backgroundView.frame = backgroundFrame;
-        }
-        else {
-        }
+
+        _backgroundView.frame = backgroundFrame;
     } completion:^(BOOL finished) {
     }];
 }

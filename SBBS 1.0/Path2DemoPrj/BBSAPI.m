@@ -782,22 +782,36 @@
     
 	[self utfAppendBody:body data:bodyPrefixString];
     NSData* imageData;
-    if ([[string substringFromIndex:37]isEqual:@"PNG"]) {
+    if ([[[string substringFromIndex:37] lowercaseString]isEqual:@"png"]) {
+        NSLog(@"png");
         imageData = UIImagePNGRepresentation((UIImage*)image);
     }
-    else if ([[string substringFromIndex:37]isEqual:@"JPG"])
+    else if ([[[string substringFromIndex:37] lowercaseString]isEqual:@"jpg"])
     {
+        NSLog(@"jpg");
         imageData = UIImageJPEGRepresentation(image, 0.6);
     }
     else
     {//其他图片会转换为png
+        NSLog(@"else as png");
         imageData = UIImagePNGRepresentation((UIImage*)image);
     }
     
     
     
     [self utfAppendBody:body data:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", @"file", string]];
-    [self utfAppendBody:body data:@"Content-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    if ([[[string substringFromIndex:37] lowercaseString]isEqual:@"png"]) {
+        [self utfAppendBody:body data:@"Content-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    }
+    else if ([[[string substringFromIndex:37] lowercaseString]isEqual:@"jpg"])
+    {
+        [self utfAppendBody:body data:@"Content-Type: image/jpeg\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    }
+    else
+    {
+        [self utfAppendBody:body data:@"Content-Type: image/gif\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    }
+    
     [body appendData:imageData];
     
     [self utfAppendBody:body data:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n", @"status"]];

@@ -117,7 +117,7 @@
         cell.notification = myBBS.notification;
         [cell refreshCell];
         return cell;
-    }    
+    }
     
     static NSString *CellIdentifier = @"LeftViewTableCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -167,7 +167,6 @@
     UITableViewCell * cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor lightTextColor];
     [self performSelector:@selector(clearCellBack:) withObject:cell afterDelay:0.5];
-    
     
     if (indexPath.row == 0 && indexPath.section == 0) {
         TopTenViewController * topicsViewController = [[TopTenViewController alloc] initWithNibName:@"TopTenViewController" bundle:nil];
@@ -254,6 +253,7 @@
         [home showViewController:@"关于"];
         [aboutViewController release];
     }
+    
 }
 
 #pragma mark - UIsearchBarDelegate

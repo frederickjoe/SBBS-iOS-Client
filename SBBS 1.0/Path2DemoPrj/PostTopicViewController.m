@@ -152,45 +152,34 @@
 -(IBAction)operateAtt:(id)sender
 {
     if (postType==0) {
-        
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] initWithNibName:@"UploadAttachmentsViewController" bundle:nil];
         uavc.postType=0;//新帖
-        uavc.mDelegate = appDelegate.homeViewController;
-        //[self presentModalViewController:postTopicViewController animated:YES];
-        //HomeViewController * home = appDelegate.homeViewController;
-        [self presentModalViewController:uavc animated:YES];
+        uavc.mDelegate = self;
+        [self presentViewController:uavc animated:YES completion:nil];
         [uavc release];
     }
     
     else if(postType==2)
     {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] initWithNibName:@"UploadAttachmentsViewController" bundle:nil];
         uavc.postType=2;//修改贴
         uavc.attList=attList;
-        
         uavc.mDelegate=self;
         uavc.postId=rootTopic.ID;
         uavc.board=rootTopic.board;
-        //[self presentModalViewController:postTopicViewController animated:YES];
-        //HomeViewController * home = appDelegate.homeViewController;
-        [self presentModalViewController:uavc animated:YES];
+        [self presentViewController:uavc animated:YES completion:nil];
         [uavc release];
     }
     
     else
     {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] initWithNibName:@"UploadAttachmentsViewController" bundle:nil];
         uavc.postType=1;//回复
         //uavc.attList=attList;
         uavc.mDelegate = self;
         uavc.postId=rootTopic.ID;
         uavc.board=rootTopic.board;
-        //[self presentModalViewController:postTopicViewController animated:YES];
-        //HomeViewController * home = appDelegate.homeViewController;
-        [self presentModalViewController:uavc animated:YES];
+        [self presentViewController:uavc animated:YES completion:nil];
         [uavc release];
     }
  

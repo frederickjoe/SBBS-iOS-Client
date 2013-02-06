@@ -43,7 +43,11 @@
     [life setText:[NSString stringWithFormat:@"%i", user.life]];
     
     if (user.gender != NULL) {
-        [gender setText:[NSString stringWithFormat:@"%@", user.gender]];
+        if([user.gender isEqualToString:@"M"])
+            [gender setText:[NSString stringWithFormat:@"%@", @"帅哥"]];
+        else
+            [gender setText:[NSString stringWithFormat:@"%@", @"美女"]];
+        
         [astro setText:[NSString stringWithFormat:@"%@", user.astro]];
     }
     else {

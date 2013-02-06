@@ -49,9 +49,9 @@
 -(IBAction)cancel:(id)sender
 {
     [mDelegate passValue:attList];
-    //[attList release];
     [self dismissModalViewControllerAnimated:YES];
 }
+
 - (IBAction)pickImageFromAlbum:(id)sender
 {
     imagePicker = [[UIImagePickerController alloc] init];
