@@ -50,6 +50,7 @@
         UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, 320, rect.size.height - 64)];
         [self.view addSubview:webView];
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:imageData.url]]];
+        [webView release];
     }
     [spinner startAnimating];
     if (imageData.image == nil) {

@@ -457,6 +457,7 @@
         return [notification autorelease];
     }
     else {
+        [notification release];
         return nil;
     }
     return nil;
@@ -490,7 +491,7 @@
     else
     {
         //NSLog(@"error:%@",[attDic objectForKey:@"error"]);
-        
+        [attArray release];
         return nil;
     }
     

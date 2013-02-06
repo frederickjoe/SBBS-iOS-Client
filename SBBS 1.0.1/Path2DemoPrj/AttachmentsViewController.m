@@ -64,10 +64,12 @@
         SingleImageWithScrollViewController * singleImageWithScrollViewController = [[SingleImageWithScrollViewController alloc] initWithNibName:@"SingleImageWithScrollViewController" bundle:nil];
         singleImageWithScrollViewController.mDelegate = nil;
         singleImageWithScrollViewController.imageData = imageData;
+        
         if ([curAttUrlString hasSuffix:@".gif"] || [curAttUrlString hasSuffix:@".GIF"])
             singleImageWithScrollViewController.isGIF = TRUE;
         [singleImageWithScrollViewController loadBigImageView];
         [appDelegate.homeViewController presentViewController:singleImageWithScrollViewController animated:YES completion:nil];
+        [imageData release];
         [singleImageWithScrollViewController release];
     }
     else{

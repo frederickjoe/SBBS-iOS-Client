@@ -210,6 +210,7 @@
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSArray * topics = [[BBSAPI getMails:myBBS.mySelf.token Type:mailBoxType Start:[topTenArray count]] retain];
     [topTenArray addObjectsFromArray:topics];
+    [topics release];
     [self performSelectorOnMainThread:@selector(refreshTableView) withObject:nil waitUntilDone:NO];
     [pool release];
 }

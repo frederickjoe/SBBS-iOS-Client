@@ -27,7 +27,7 @@
         [logoImageView setImage:[UIImage imageNamed:@"headerlogo.png"]];
         logoImageView.alpha = 0.5;
         [self addSubview:logoImageView];
-        
+        [logoImageView release];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont systemFontOfSize:12.0f];
 		label.textColor = TEXT_COLOR;
