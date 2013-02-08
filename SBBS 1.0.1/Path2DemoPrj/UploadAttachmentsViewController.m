@@ -75,7 +75,7 @@
     UITableViewCell * cell=[[UITableViewCell alloc] init];
     cell.textLabel.text=[[attList objectAtIndex:indexPath.row] attFileName];
     [cell.textLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
-    return [cell autorelease];
+    return cell;
 }
 
 
@@ -117,8 +117,7 @@
         delUrlString=[NSString stringWithFormat:@"http://bbs.seu.edu.cn/api/attachment/delete.js?token=%@&board=%@&id=%d&attid=%d",myBBS.mySelf.token,board,postId,attid];
     }
     NSURL *delUrl=[NSURL URLWithString:delUrlString];
-    [attList release];
-    attList=[[BBSAPI delImg:delUrl] retain];
+    attList=[BBSAPI delImg:delUrl];
     [attTable reloadData];
 }
 
@@ -126,7 +125,7 @@
 {
     [self dismissModalViewControllerAnimated:YES];
 
-    image= [[info objectForKey:@"UIImagePickerControllerOriginalImage"] retain];
+    image= [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     
     NSURL *imagePath= [info objectForKey:@"UIImagePickerControllerReferenceURL"] ;
     //NSLog(@"%@",[image debugDescription]);
@@ -136,7 +135,7 @@
     NSString *imagePathString=[imagePath absoluteString];
     NSRange r=NSMakeRange(36, 36);
     NSString *imageName= [imagePathString substringWithRange:r];
-    imageFileName=[[NSString stringWithFormat:@"%@.%@",imageName,imageSuffix] retain];
+    imageFileName=[NSString stringWithFormat:@"%@.%@",imageName,imageSuffix];
     //NSLog(@"RangeString:%@",imageName);
     NSString *urlString;
     
@@ -147,7 +146,7 @@
         
         urlString=[NSString stringWithFormat:@"http://bbs.seu.edu.cn/api/attachment/add.js?token=%@&board=%@&id=%d",myBBS.mySelf.token,board,postId];
     }
-    theUrl=[[NSURL URLWithString:urlString] retain];
+    theUrl=[NSURL URLWithString:urlString];
     
     //NSArray *a=[[BBSAPI postImageto:theUrl withImage:image andToken:myBBS.mySelf.token] retain];
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
@@ -161,20 +160,14 @@
     {
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
-    [picker release];
     
 }
 
 -(void)uploadImage
 {
-    [attList release];
-    attList=[[BBSAPI postImg:imageFileName Image:image toUrl:theUrl] retain];
+    attList=[BBSAPI postImg:imageFileName Image:image toUrl:theUrl];
     
     [HUD removeFromSuperview];
-    [HUD release];
-    [image release];
-    [theUrl release];
-    [imageFileName release];
     [attTable reloadData];
 }
 @end

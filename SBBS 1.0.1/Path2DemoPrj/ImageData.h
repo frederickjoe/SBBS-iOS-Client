@@ -18,8 +18,8 @@
     UIImage * waitImage;
     NSData * waitImageData;
 }
-@property(nonatomic, retain)NSString * title;
-@property(nonatomic, retain)NSString * url;
-@property(nonatomic, retain)UIImage * image;
-@property(nonatomic, retain)UIImage * waitImage;
+@property(nonatomic, strong)NSString * title;
+@property(nonatomic, strong)NSString * url;
+@property(nonatomic, strong)UIImage * image;
+@property(nonatomic, strong)UIImage * waitImage;
 @end

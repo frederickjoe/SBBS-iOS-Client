@@ -20,6 +20,6 @@
     NSString * openString;
 }
 @property(nonatomic, strong)NSArray *attList;
-@property(nonatomic, retain)NSString * openString;
+@property(nonatomic, strong)NSString * openString;
 -(IBAction)back:(id)sender;
 @end

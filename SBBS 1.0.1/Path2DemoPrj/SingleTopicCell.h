@@ -12,7 +12,7 @@
 {
     IBOutlet UILabel * articleTitleLabel;
     IBOutlet UILabel * authorLabel;
-    IBOutlet UITextView * contentTextView;
+    IBOutlet UITextView * __unsafe_unretained contentTextView;
     IBOutlet UILabel * contentLabel;
     IBOutlet UIImageView * attNotifier;
     int ID;
@@ -25,12 +25,12 @@
 }
 @property(nonatomic, assign)BOOL attExist;
 @property(nonatomic, assign)int ID;
-@property(nonatomic, retain)NSDate * time;
-@property(nonatomic, retain)NSString * title;
-@property(nonatomic, retain)NSString * author;
-@property(nonatomic, retain)NSString * content;
+@property(nonatomic, strong)NSDate * time;
+@property(nonatomic, strong)NSString * title;
+@property(nonatomic, strong)NSString * author;
+@property(nonatomic, strong)NSString * content;
 
-@property(nonatomic, assign)IBOutlet UITextView * contentTextView;
+@property(nonatomic, unsafe_unretained)IBOutlet UITextView * contentTextView;
 @property(nonatomic, assign)int read;
 -(void)setReadyToShow;
 @end

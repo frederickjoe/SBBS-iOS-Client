@@ -17,15 +17,15 @@
     UIScrollView * imageScrollView;
     UIImageView * imageRealView;
     UIActivityIndicatorView * spinner;
-    id mDelegate;
+    id __unsafe_unretained mDelegate;
     
     ImageData * imageData;
     
     BOOL isGIF;
 }
-@property(nonatomic, assign)UIImageView * imageRealView;
-@property(nonatomic, retain)ImageData * imageData;
-@property(nonatomic, assign)id mDelegate;
+@property(nonatomic, strong)UIImageView * imageRealView;
+@property(nonatomic, strong)ImageData * imageData;
+@property(nonatomic, unsafe_unretained)id mDelegate;
 @property(nonatomic, assign)BOOL isGIF;
 
 -(IBAction)back:(id)sender;

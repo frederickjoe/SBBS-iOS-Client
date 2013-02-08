@@ -22,15 +22,9 @@
 }
 -(void)dealloc
 {
-    [super dealloc];
-    [waitImage release];
     
-    title = nil;
-    url = nil;
     
-    image = nil;
     imageData = nil;
-    waitImage = nil;
     waitImageData = nil;
 }
 
@@ -45,9 +39,7 @@
         waitImageData = [decoder decodeObjectForKey:@"waitImageData"];
         
         image = [UIImage imageWithData:imageData];
-        [image retain];
         waitImage = [UIImage imageWithData:waitImageData];
-        [waitImage retain];
     }
     return  self;
 }

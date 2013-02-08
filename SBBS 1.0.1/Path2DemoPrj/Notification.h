@@ -15,8 +15,8 @@
     NSArray * replies;
     int count;
 }
-@property(nonatomic, retain)NSArray * mails;
-@property(nonatomic, retain)NSArray * ats;
-@property(nonatomic, retain)NSArray * replies;
+@property(nonatomic, strong)NSArray * mails;
+@property(nonatomic, strong)NSArray * ats;
+@property(nonatomic, strong)NSArray * replies;
 @property(nonatomic, assign)int count;
 @end

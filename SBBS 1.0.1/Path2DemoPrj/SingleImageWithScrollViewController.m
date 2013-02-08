@@ -50,7 +50,6 @@
         UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, 320, rect.size.height - 64)];
         [self.view addSubview:webView];
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:imageData.url]]];
-        [webView release];
     }
     [spinner startAnimating];
     if (imageData.image == nil) {
@@ -59,13 +58,15 @@
         imageDownloader.imageData = imageData;
         imageDownloader.imageView = imageRealView;
         [imageDownloader startDownload];
-        [imageDownloader release];
     }
     else {
-        for(UIView *indicatorview in [imageRealView subviews])
-            [indicatorview stopAnimation];
+        //for(UIView *indicatorview in [imageRealView subviews])
+        //    [indicatorview stopAnimation];
+        
         [imageRealView setImage:imageData.image];
     }
+    [spinner stopAnimating];
+    [spinner removeFromSuperview];
 }
 - (void)viewDidLoad
 {
@@ -112,7 +113,6 @@
     else{
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"图片还未加载好，再等一等吧～" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
         [alert show];
-        [alert release];
     }
 }
 
@@ -123,13 +123,11 @@
     if(error !=NULL){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告" message:@"图片保存失败" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil];
         [alert show];
-        [alert release];
     }
     else
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"图片保存成功" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil];
         [alert show];
-        [alert release];
     }
 }
  

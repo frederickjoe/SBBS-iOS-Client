@@ -22,6 +22,7 @@
     NSString * board;
     int replies;
     int read;
+    BOOL unread;
 }
 @property(nonatomic, assign)int ID;
 @property(nonatomic, retain)NSDate * time;
@@ -30,7 +31,7 @@
 @property(nonatomic, retain)NSString * board;
 @property(nonatomic, assign)int replies;
 @property(nonatomic, assign)int read;
-
+@property(nonatomic, assign)BOOL unread;
 -(void)setReadyToShow;
 -(void)showAinmationWhenSeleceted;
 @end

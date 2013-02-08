@@ -37,12 +37,12 @@
     MyBBS * myBBS;
     
     BOOL isForShowNotification;
-    id mDelegate;
+    id __unsafe_unretained mDelegate;
 }
-@property(nonatomic, retain)Topic * rootTopic;
+@property(nonatomic, strong)Topic * rootTopic;
 @property(nonatomic, assign)BOOL isForShowNotification;
-@property(nonatomic, assign)id mDelegate;
-@property(nonatomic, assign)CustomTableView * customTableView;
+@property(nonatomic, unsafe_unretained)id mDelegate;
+@property(nonatomic)CustomTableView * customTableView;
 
 -(IBAction)back:(id)sender;
 

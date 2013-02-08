@@ -17,12 +17,9 @@
 
 - (void)dealloc
 {
-    [activeDownload release];
     
     [imageConnection cancel];
-    [imageConnection release];
     
-    [super dealloc];
 }
 
 - (void)startDownload
@@ -32,7 +29,6 @@
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:
                              [NSURLRequest requestWithURL:[NSURL URLWithString:imageData.url]] delegate:self];
     self.imageConnection = conn;
-    [conn release];
 }
 
 - (void)cancelDownload
@@ -67,11 +63,10 @@
 
     imageData.image = image;
     [imageView setImage:imageData.image];
-    for(UIView *indicatorview in [imageView subviews])
-    [indicatorview stopAnimation];
+    //for(UIView *indicatorview in [imageView subviews])
+    //[indicatorview stopAnimation];
     
     self.activeDownload = nil;
-    [image release];
     
     // Release the connection now that it's finished
     self.imageConnection = nil;

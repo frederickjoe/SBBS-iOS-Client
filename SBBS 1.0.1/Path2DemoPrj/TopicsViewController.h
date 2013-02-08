@@ -25,13 +25,16 @@
     TimeScroller *_timeScroller;
     MBProgressHUD * HUD;
     QuadCurveMenu *menu;
+    NSArray *modeContent;
+    UIPickerView *modePicker;
     IBOutlet UILabel * topTitle;
-    
+    int curMode;// 0 全部帖子（默认） 1 主题贴 2 论坛模式 3 置顶帖 4 文摘区 5 保留区
     MyBBS * myBBS;
 }
 @property(nonatomic, retain)NSString * boardName;
 @property(nonatomic, retain)NSArray * topTenArray;
 @property(nonatomic, assign)CustomTableView * customTableView;
-
+-(IBAction)pickMode:(id)sender;
 -(IBAction)back:(id)sender;
+-(IBAction)changeCurMode:(id)sender;
 @end

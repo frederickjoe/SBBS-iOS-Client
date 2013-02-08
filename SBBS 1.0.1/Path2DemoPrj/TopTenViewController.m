@@ -127,6 +127,7 @@
     cell.replies = topic.replies;
     cell.read = topic.read;
     cell.board = topic.board;
+    cell.unread = YES;
     [cell setReadyToShow];
     
     return cell;

@@ -21,7 +21,7 @@
         
         NSString * urlEncode = [loginDictionary objectForKey:@"token"];
         myself.token = [urlEncode URLEncodedString];
-        return [myself autorelease];
+        return myself;
     }
     else {
         return nil;
@@ -45,9 +45,8 @@
             user.mode = mode;
             
             [friends addObject:user];
-            [user release];
         }
-        return [friends autorelease];
+        return friends;
     }
     else {
         return nil;
@@ -73,9 +72,8 @@
             mail.type = type;
             
             [mails addObject:mail];
-            [mail release];
         }
-        return [mails autorelease];
+        return mails;
     }
     else {
         return nil;
@@ -99,7 +97,7 @@
         mail.time = [NSDate dateWithTimeIntervalSince1970:interval];
         mail.type = type;
         
-        return [mail autorelease];
+        return mail;
     }
     else {
         return nil;
@@ -129,7 +127,6 @@
         }
         
         [board.sectionBoards addObject:boardcach];
-        [boardcach release];
     }
 }
 
@@ -161,9 +158,8 @@
                 
             }
             [boards addObject:board];
-            [board release];
         }
-        return [boards autorelease];
+        return boards;
     }
     else {
         return nil;
@@ -190,9 +186,8 @@
             board.description = description;
             
             [boards addObject:board];
-            [board release];
         }
-        return [boards autorelease];
+        return boards;
     }
     else {
         return nil;
@@ -219,6 +214,7 @@
             int replies = [[[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"replies"] intValue];
             int read = [[[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"read"] intValue];
             
+            BOOL unread=[[[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"unread"] boolValue];
             topic.ID = ID;
             topic.title = title;
             topic.author = author;
@@ -226,11 +222,10 @@
             topic.time = time;
             topic.replies = replies;
             topic.read = read;
-            
+            topic.unread= unread;
             [topTen addObject:topic];
-            [topic release];
         }
-        return [topTen autorelease];
+        return topTen;
     }
     else {
         return nil;
@@ -257,7 +252,6 @@
             [inputFormat setDateFormat:@"yyyyMMdd"]; //20101208
             //将NSString转换为NSDate
             NSDate *time = [inputFormat dateFromString:timeString];
-            [inputFormat release];
             
             int replies = [[[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"replies"] intValue];
             int read = [[[[topicsDictionary objectForKey:@"topics"] objectAtIndex:i] objectForKey:@"read"] intValue];
@@ -271,9 +265,8 @@
             topic.read = read;
             
             [topTen addObject:topic];
-            [topic release];
         }
-        return [topTen autorelease];
+        return topTen;
     }
     else {
         return nil;
@@ -321,12 +314,10 @@
                 [attElement setAttUrl:[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"url"]];
                 
                 [attArray addObject:attElement];
-                [attElement release];
             }
             ///////////////////
             topic.attachments = attArray;
             ////////modified by joe//////
-            [attArray release];
             topic.ID = ID;
             topic.gID = gID;
             topic.reid = reid;
@@ -345,9 +336,8 @@
                 topic.quote = quote;
             topic.quoter =quoter;
             [topTen addObject:topic];
-            [topic release];
         }
-        return [topTen autorelease];
+        return topTen;
     }
     else {
         return nil;
@@ -381,7 +371,7 @@
         user.astro = [loginDictionary objectForKey:@"astro"];
         user.mode = [loginDictionary objectForKey:@"mode"];
         
-        return [user autorelease];
+        return user;
     }
     else {
         return nil;
@@ -408,7 +398,6 @@
             mail.type = 0;
             mail.unread = YES;
             [mails addObject:mail];
-            [mail release];
         }
         
         NSMutableArray * ats = [[NSMutableArray alloc] init];
@@ -426,7 +415,6 @@
             topic.title = title;
             
             [ats addObject:topic];
-            [topic release];
         }
         
         NSMutableArray * replies = [[NSMutableArray alloc] init];
@@ -444,20 +432,15 @@
             topic.title = title;
             
             [replies addObject:topic];
-            [topic release];
         }
         
         notification.mails = mails;
         notification.ats = ats;
         notification.replies = replies;
-        [mails release];
-        [ats release];
-        [replies release];
         
-        return [notification autorelease];
+        return notification;
     }
     else {
-        [notification release];
         return nil;
     }
     return nil;
@@ -482,16 +465,14 @@
             [attElement setAttUrl:[[[attDic objectForKey:@"attachments"] objectAtIndex:j] objectForKey:@"url"]];
             
             [attArray addObject:attElement];
-            [attElement release];
         }
         
-        return [attArray autorelease];
+        return attArray;
 
     }
     else
     {
         //NSLog(@"error:%@",[attDic objectForKey:@"error"]);
-        [attArray release];
         return nil;
     }
     

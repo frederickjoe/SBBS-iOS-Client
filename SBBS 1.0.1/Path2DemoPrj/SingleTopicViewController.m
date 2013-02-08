@@ -52,24 +52,18 @@
 	[self.view insertSubview:HUD atIndex:0];
 	HUD.labelText = @"Loading...";
     [HUD showWhileExecuting:@selector(firstTimeLoad) onTarget:self withObject:nil animated:YES];
-    [HUD release];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 -(void)dealloc
 {
-    [super dealloc];
-    [customTableView release];
-    customTableView  = nil;
-    [_timeScroller release];
     _timeScroller = nil;
-    [rootTopic release];
-    rootTopic = nil;
 }
 -(IBAction)back:(id)sender
 {
@@ -227,7 +221,7 @@
     
     cell.backgroundColor = [UIColor lightTextColor];
     [self performSelector:@selector(clearCellBack:) withObject:cell afterDelay:0.5];
-    selectTopic = [[topicsArray objectAtIndex:indexPath.row] retain];
+    selectTopic = [topicsArray objectAtIndex:indexPath.row];
     [self showActionSheet];
 }
 
@@ -235,21 +229,21 @@
 #pragma mark CustomtableView delegate
 -(void)refreshTable
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSArray * topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Start:0 Token:myBBS.mySelf.token];
-    [topicsArray removeAllObjects];
-    [topicsArray addObjectsFromArray:topics];
-    
-    [self performSelectorOnMainThread:@selector(refreshTableView) withObject:nil waitUntilDone:NO];
-    [pool release];
+    @autoreleasepool {
+        NSArray * topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Start:0 Token:myBBS.mySelf.token];
+        [topicsArray removeAllObjects];
+        [topicsArray addObjectsFromArray:topics];
+        
+        [self performSelectorOnMainThread:@selector(refreshTableView) withObject:nil waitUntilDone:NO];
+    }
 }
 -(void)loadMoreTable
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSArray * topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Start:[topicsArray count] Token:myBBS.mySelf.token];
-    [topicsArray addObjectsFromArray:topics];
-    [self performSelectorOnMainThread:@selector(refreshTableView) withObject:nil waitUntilDone:NO];
-    [pool release];
+    @autoreleasepool {
+        NSArray * topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Start:[topicsArray count] Token:myBBS.mySelf.token];
+        [topicsArray addObjectsFromArray:topics];
+        [self performSelectorOnMainThread:@selector(refreshTableView) withObject:nil waitUntilDone:NO];
+    }
 }
 -(void)refreshTableView
 {
@@ -285,25 +279,20 @@
                                                                highlightedImage:storyMenuItemImagePressed
                                                                    ContentImage:writenewImage
                                                         highlightedContentImage:nil];
-    QuadCurveMenuItem *starMenuItem3 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
-                                                               highlightedImage:storyMenuItemImagePressed
-                                                                   ContentImage:homeImage
-                                                        highlightedContentImage:nil];
+//    QuadCurveMenuItem *starMenuItem3 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
+//                                                               highlightedImage:storyMenuItemImagePressed
+//                                                                   ContentImage:homeImage
+//                                                        highlightedContentImage:nil];
     QuadCurveMenuItem *starMenuItem4 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed
                                                                    ContentImage:refreshImage
                                                         highlightedContentImage:nil];
     
-    NSArray *menus = [NSArray arrayWithObjects:starMenuItem1, starMenuItem2, starMenuItem3, starMenuItem4, nil];
-    [starMenuItem1 release];
-    [starMenuItem2 release];
-    [starMenuItem3 release];
-    [starMenuItem4 release];
+    NSArray *menus = [NSArray arrayWithObjects:starMenuItem1, starMenuItem2, /*starMenuItem3,*/ starMenuItem4, nil];
     
     menu = [[QuadCurveMenu alloc] initWithFrame:CGRectMake(10, 10, 200, 200) menus:menus];
     menu.delegate = self;
     [self.view addSubview:menu];
-    [menu release];
 }
 - (void)quadCurveMenu:(QuadCurveMenu *)menu didSelectIndex:(NSInteger)idx
 {
@@ -325,7 +314,6 @@
             postTopicViewController.rootTopic = rootTopic;
             postTopicViewController.mDelegate = appDelegate.homeViewController;
             [appDelegate.homeViewController presentModalViewController:postTopicViewController animated:YES];
-            [postTopicViewController release];
         }
     }
     if (idx == 1) {
@@ -334,18 +322,17 @@
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:userInfoViewController animated:YES];
-        [userInfoViewController release];
     }
-    if (idx == 2) {
-        TopicsViewController * topicsViewController = [[TopicsViewController alloc] initWithNibName:@"TopicsViewController" bundle:nil];
-        topicsViewController.boardName = rootTopic.board;
+//    if (idx == 2) {
+//        TopicsViewController * topicsViewController = [[TopicsViewController alloc] initWithNibName:@"TopicsViewController" bundle:nil];
+//        topicsViewController.boardName = rootTopic.board;
+//        
+//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        HomeViewController * home = appDelegate.homeViewController;
+//        [home.navigationController pushViewController:topicsViewController animated:YES];
         
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        HomeViewController * home = appDelegate.homeViewController;
-        [home.navigationController pushViewController:topicsViewController animated:YES];
-        [topicsViewController release];
-    }
-    if (idx == 3) {
+//    }
+    if (idx == 2) {
         [customTableView.mTableView setContentOffset:CGPointMake(0, 0) animated:YES];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         // Configure for text only and offset down
@@ -374,7 +361,6 @@
                                          otherButtonTitles:@"回复", @"查看用户", @"修改文章",@"查看附件", nil];
             actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
             [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
-            [actionSheet release];
         }
         else
         {
@@ -386,7 +372,6 @@
                                          otherButtonTitles:@"回复", @"查看用户", @"修改文章", nil];
             actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
             [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
-            [actionSheet release];
         }
         
     }
@@ -400,7 +385,6 @@
         
         actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
-        [actionSheet release];
     }
     else{
         UIActionSheet*actionSheet = [[UIActionSheet alloc]
@@ -412,10 +396,8 @@
         
         actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
-        [actionSheet release];
     }
     //////modified by joe//////
-    [string release];
 }
 - (void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -451,7 +433,6 @@
             AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             HomeViewController * home = appDelegate.homeViewController;
             [home.navigationController pushViewController:userInfoViewController animated:YES];
-            [userInfoViewController release];
         }
         if(buttonIndex == 2 && [myBBS.mySelf.ID isEqualToString:selectTopic.author])
         {//当前话题作者等于自己，2号即为修改文章
@@ -462,7 +443,6 @@
             postTopicViewController.mDelegate = appDelegate.homeViewController;
             //[self presentModalViewController:postTopicViewController animated:YES];
             [appDelegate.homeViewController presentModalViewController:postTopicViewController animated:YES];
-            [postTopicViewController release];
         }
     if(buttonIndex == 2 && ![myBBS.mySelf.ID isEqualToString:selectTopic.author])
     {//当前话题作者不是自己，2号即为查看附件
@@ -474,7 +454,6 @@
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:attViewController animated:YES];
-        [attViewController release];
     }
     if (buttonIndex ==3 && [myBBS.mySelf.ID isEqualToString:selectTopic.author]) {
         //NSLog(@"View Att for Self");
@@ -484,7 +463,6 @@
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:attViewController animated:YES];
-        [attViewController release];
     }
     
 }
@@ -519,7 +497,6 @@ else{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:userInfoViewController animated:YES];
-        [userInfoViewController release];
     }
     if(buttonIndex == 2 && [myBBS.mySelf.ID isEqualToString:selectTopic.author])
     {//当前话题作者等于自己，2号即为修改文章
@@ -530,7 +507,6 @@ else{
         postTopicViewController.mDelegate = appDelegate.homeViewController;
         //[self presentModalViewController:postTopicViewController animated:YES];
         [appDelegate.homeViewController presentModalViewController:postTopicViewController animated:YES];
-        [postTopicViewController release];
     }
 }
 

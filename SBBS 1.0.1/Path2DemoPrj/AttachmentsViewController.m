@@ -46,7 +46,7 @@
     UITableViewCell * cell=[[UITableViewCell alloc] init];
     cell.textLabel.text=[[attList objectAtIndex:indexPath.row] attFileName];
     [cell.textLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
-    return [cell autorelease];
+    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
@@ -69,14 +69,11 @@
             singleImageWithScrollViewController.isGIF = TRUE;
         [singleImageWithScrollViewController loadBigImageView];
         [appDelegate.homeViewController presentViewController:singleImageWithScrollViewController animated:YES completion:nil];
-        [imageData release];
-        [singleImageWithScrollViewController release];
     }
     else{
         openString = curAttUrlString;
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"用Safari打开此附件" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好",nil];
         [alert show];
-        [alert release];
     }
 }
 
@@ -139,7 +136,7 @@
         case 1:
         {
             NSURL* url = [[NSURL alloc] initWithString:openString];
-            [[UIApplication sharedApplication] openURL:[url autorelease]];
+            [[UIApplication sharedApplication] openURL:url];
         }
             break;
     }

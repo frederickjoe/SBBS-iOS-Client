@@ -16,7 +16,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -29,15 +28,14 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     
-    [baseurl release];
     
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
-    NSArray * Status = [[JsonParseEngine parseSearchTopics:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseSearchTopics:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -47,7 +45,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -60,14 +57,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    NSArray * Status = [[JsonParseEngine parseBoards:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -78,7 +74,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -89,14 +84,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    User * Status = [[JsonParseEngine parseLogin:topTenTopics] retain];
+    User * Status = [JsonParseEngine parseLogin:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -107,7 +101,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -116,12 +109,12 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    NSArray * Status = [[JsonParseEngine parseTopics:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseTopics:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -131,7 +124,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -140,12 +132,12 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    NSArray * Status = [[JsonParseEngine parseBoards:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -155,17 +147,16 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
     NSDictionary *topTenTopics = [data objectFromJSONData];
-    NSArray * Status = [[JsonParseEngine parseSections:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseSections:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -175,7 +166,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -185,7 +175,6 @@
     }
     NSURL *url = [NSURL URLWithString:baseurl];
     NSData * feedback = [NSData dataWithContentsOfURL:url];
-    [baseurl release];
     return feedback;
 }
 
@@ -195,7 +184,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -205,14 +193,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    NSArray * Status = [[JsonParseEngine parseSections:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseSections:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -222,7 +209,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -232,14 +218,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    NSArray * Status = [[JsonParseEngine parseFriends:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseFriends:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -249,7 +234,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -259,14 +243,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    NSArray * Status = [[JsonParseEngine parseFriends:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseFriends:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -276,7 +259,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return false;
     }
     
@@ -287,7 +269,6 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
     BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
     return success;
@@ -298,7 +279,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return false;
     }
     
@@ -309,7 +289,6 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
     int result = [[topTenTopics objectForKey:@"result"] intValue];
     BOOL success = NO;
@@ -324,7 +303,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return false;
     }
     
@@ -335,7 +313,6 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
     int result = [[topTenTopics objectForKey:@"result"] intValue];
     if (result == -2) {
@@ -353,7 +330,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -365,14 +341,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    NSArray * Status = [[JsonParseEngine parseMails:topTenTopics Type:type] retain];
+    NSArray * Status = [JsonParseEngine parseMails:topTenTopics Type:type];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -382,7 +357,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -394,14 +368,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    Mail * Status = [[JsonParseEngine parseSingleMail:topTenTopics Type:type] retain];
+    Mail * Status = [JsonParseEngine parseSingleMail:topTenTopics Type:type];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 +(BOOL)deleteSingleMail:(NSString *)token Type:(int)type ID:(int)ID
@@ -410,7 +383,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return false;
     }
     
@@ -421,7 +393,6 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     
-    [baseurl release];
     
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
@@ -433,7 +404,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return false;
     }
     
@@ -446,7 +416,6 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     
-    [baseurl release];
     
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
@@ -469,7 +438,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -479,14 +447,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    Notification * Status = [[JsonParseEngine parseNotification:topTenTopics] retain];
+    Notification * Status = [JsonParseEngine parseNotification:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 +(BOOL)clearNotification:(NSString *)token
@@ -495,7 +462,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return false;
     }
     
@@ -504,26 +470,24 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     
-    [baseurl release];
     
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
     return success;
 }
 
-+(NSArray *)boardTopics:(NSString *)board Start:(int)start Token:(NSString*)token
++(NSArray *)boardTopics:(NSString *)board Start:(int)start Token:(NSString*)token Mode:(int)mode
 {
     if(![BBSAPI isNetworkReachable])
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
     NSMutableString * baseurl = [@"http://bbs.seu.edu.cn/api/" mutableCopy];
     [baseurl appendFormat:@"board/%@.json?", board];
-    [baseurl appendFormat:@"mode=2&limit=10&start=%i", start];
+    [baseurl appendFormat:@"mode=%d&limit=10&start=%i", mode,start];
     if (token != nil) {
         [baseurl appendFormat:@"&token=%@", token];
     }
@@ -531,14 +495,13 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
-    NSArray * Status = [[JsonParseEngine parseTopics:topTenTopics] retain];
+    NSArray * Status = [JsonParseEngine parseTopics:topTenTopics];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -548,7 +511,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -561,15 +523,14 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     
-    [baseurl release];
 
     NSDictionary *singleTopic = [feedback objectFromJSONData];
-    NSArray * Status = [[JsonParseEngine parseSingleTopic:singleTopic] retain];
+    NSArray * Status = [JsonParseEngine parseSingleTopic:singleTopic];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 +(User *)userInfo:(NSString *)userID
@@ -578,7 +539,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
@@ -587,15 +547,14 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     
-    [baseurl release];
     
     NSDictionary *singleTopic = [feedback objectFromJSONData];
-    User * Status = [[JsonParseEngine parseUserInfo:singleTopic] retain];
+    User * Status = [JsonParseEngine parseUserInfo:singleTopic];
     if (Status == nil) {
         return nil;
     }
     else {
-        return [Status autorelease];
+        return Status;
     }
 }
 
@@ -608,7 +567,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return false;
     }
     
@@ -623,7 +581,6 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
     BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
     return success;
@@ -635,7 +592,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return false;
     }
     
@@ -650,7 +606,6 @@
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *topTenTopics = [feedback objectFromJSONData];
     
-    [baseurl release];
     
     BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
     return success;
@@ -686,14 +641,13 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     // 把url的结果返回给response
     NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     UIImage *img=[[UIImage alloc] initWithData:response];
-    return [img autorelease];
+    return img;
 }
 
 +(NSArray *)postImageto:(NSURL *)url withImage:(UIImage *)img andToken:(NSString *)token
@@ -702,14 +656,13 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     
     //NSMutableURLRequest *myRequest=[NSMutableURLRequest requestWithURL:url];//创建一个指向目的网站的请求
     NSData *imageData=UIImageJPEGRepresentation(img, 90);//一个图片数据
     
-    NSMutableURLRequest *request=[[[NSMutableURLRequest alloc] init] autorelease];//创建请求
+    NSMutableURLRequest *request=[[NSMutableURLRequest alloc] init];//创建请求
     [request setURL:url];
     
     NSString *boundary=@"0xKhTmLbOuNdArY";
@@ -737,14 +690,13 @@
     NSData *returnData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     //NSString *returnString=[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
     NSDictionary *attDic = [returnData objectFromJSONData];
-    NSArray * attArray=[[JsonParseEngine parseAttachments:attDic] retain];
+    NSArray * attArray=[JsonParseEngine parseAttachments:attDic];
     //NSLog(@"%@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     if (attArray!=nil) {
-        return [attArray autorelease];
+        return attArray;
     }
     else
     {
-        [attArray release];
         return nil;
     }
 
@@ -759,7 +711,6 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     NSString *kStringBoundary=@"0xKhTmLbOuNdArY";
@@ -822,16 +773,14 @@
     [request setHTTPBody:body];
     NSData* returnData =  [NSURLConnection sendSynchronousRequest:request
                                               returningResponse:nil error:nil];
-    [request release];
     NSDictionary *attDic = [returnData objectFromJSONData];
-    NSArray * attArray=[[JsonParseEngine parseAttachments:attDic] retain];
+    NSArray * attArray=[JsonParseEngine parseAttachments:attDic];
     //NSLog(@"%@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     if (attArray!=nil) {
-        return [attArray autorelease];
+        return attArray;
     }
     else
     {
-        [attArray release];
         return nil;
     }
 
@@ -848,18 +797,16 @@
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
         return nil;
     }
     NSData * feedback = [NSData dataWithContentsOfURL:url];
     NSDictionary *attDic = [feedback objectFromJSONData];
-    NSArray *attArray=[[JsonParseEngine parseAttachments:attDic] retain];
+    NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
     if (attArray!=nil) {
-        return [attArray autorelease];
+        return attArray;
     }
     else
     {
-        [attArray release];
         return nil;
     }
 }

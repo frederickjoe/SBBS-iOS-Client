@@ -16,7 +16,7 @@
 @synthesize time;
 @synthesize replies;
 @synthesize read;
-
+@synthesize unread;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -35,6 +35,15 @@
 
 -(void)setReadyToShow
 {
+    if (unread) {
+        //NSLog(@"unread");
+        [articleTitleLabel setAlpha:1];
+    }
+    else
+    {
+        //NSLog(@"read");
+        [articleTitleLabel setAlpha:0.5];
+    }
     [articleTitleLabel setText:title];
     [authorLabel setText:[NSString stringWithFormat:@"作者:%@", author]];
     [readandreplyLabel setText:[NSString stringWithFormat:@"人气:%i/%i", replies, read]];

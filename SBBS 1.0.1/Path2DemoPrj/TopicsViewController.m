@@ -27,7 +27,9 @@
 }
 -(void)firstTimeLoad
 {
-    NSArray * topics = [BBSAPI boardTopics:boardName Start:0 Token:myBBS.mySelf.token];
+    curMode=2;
+    modeContent=[[NSArray alloc] initWithObjects:@"全部帖子",@"主题帖",@"论坛模式",@"置顶区",@"文摘区",@"保留区", nil];// 0 全部帖子（默认） 1 主题贴 2 论坛模式 3 置顶帖 4 文摘区 5 保留区
+    NSArray * topics = [BBSAPI boardTopics:boardName Start:0 Token:myBBS.mySelf.token Mode:curMode];
     [topTenArray addObjectsFromArray:topics];
     customTableView = [[CustomTableView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-44) Delegate:self];
     [self.view addSubview:customTableView];
@@ -69,6 +71,8 @@
     customTableView = nil;
     [_timeScroller release];
     _timeScroller = nil;
+    [modeContent release];
+    modeContent=nil;
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -136,6 +140,14 @@
     cell.replies = topic.replies;
     cell.read = topic.read;
     cell.board = topic.board;
+    if (curMode!=2) {
+        cell.unread=YES;
+    }
+    else
+    {
+        cell.unread = topic.unread;
+    }
+    
     [cell setReadyToShow];
     
     return cell;
@@ -156,6 +168,7 @@
     
     UITableViewCell * cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor lightTextColor];
+    [cell setAlpha:0.5];
     [self performSelector:@selector(clearCellBack:) withObject:cell afterDelay:0.5];
     
     SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithNibName:@"SingleTopicViewController" bundle:nil];
@@ -163,7 +176,9 @@
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     HomeViewController * home = appDelegate.homeViewController;
+    
     [home.navigationController pushViewController:singleTopicViewController animated:YES];
+    //[self refreshTable];
     [singleTopicViewController release];
 }
 
@@ -172,7 +187,7 @@
 -(void)refreshTable
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSArray * topics = [BBSAPI boardTopics:boardName Start:0 Token:myBBS.mySelf.token];
+    NSArray * topics = [BBSAPI boardTopics:boardName Start:0 Token:myBBS.mySelf.token Mode:curMode];
     [topTenArray removeAllObjects];
     [topTenArray addObjectsFromArray:topics];
     [self performSelectorOnMainThread:@selector(refreshTableView) withObject:nil waitUntilDone:NO];
@@ -191,7 +206,7 @@
 -(void)loadMoreTable
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSArray * topics = [BBSAPI boardTopics:boardName Start:[topTenArray count] Token:myBBS.mySelf.token];
+    NSArray * topics = [BBSAPI boardTopics:boardName Start:[topTenArray count] Token:myBBS.mySelf.token Mode:curMode];
     [topTenArray addObjectsFromArray:topics];
     [self performSelectorOnMainThread:@selector(refreshTableView) withObject:nil waitUntilDone:NO];
     [pool release];
@@ -268,14 +283,15 @@
         }
     }
     if (idx == 1) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        // Configure for text only and offset down
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"暂无收藏功能";
-        hud.margin = 30.f;
-        hud.yOffset = 0.f;
-        hud.removeFromSuperViewOnHide = YES;
-        [hud hide:YES afterDelay:0.5];
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        // Configure for text only and offset down
+//        hud.mode = MBProgressHUDModeText;
+//        hud.labelText = @"暂无收藏功能";
+//        hud.margin = 30.f;
+//        hud.yOffset = 0.f;
+//        hud.removeFromSuperViewOnHide = YES;
+//        [hud hide:YES afterDelay:0.5];
+        [self changeCurMode:nil];
     }
     if (idx == 2) {
         [customTableView.mTableView setContentOffset:CGPointMake(0, 0) animated:YES];
@@ -288,6 +304,28 @@
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:0.5];
     }
+}
+
+-(IBAction)changeCurMode:(id)sender
+{
+    if (curMode>=5) {
+        curMode=0;
+    }
+    else{
+        curMode++;
+    }
+    if (curMode==1) {
+        curMode++;
+    }
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    // Configure for text only and offset down
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = [modeContent objectAtIndex:curMode];
+    hud.margin = 30.f;
+    hud.yOffset = 0.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.8];
+    [self refreshTable];
 }
 
 @end

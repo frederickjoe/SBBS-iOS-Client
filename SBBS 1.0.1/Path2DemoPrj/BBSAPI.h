@@ -30,7 +30,7 @@
 
 //有token可以查看内部版面
 +(NSData *)allSectionsData:(NSString*)token;
-+(NSArray *)boardTopics:(NSString *)board Start:(int)start Token:(NSString*)token;//参数版面名，start为下标
++(NSArray *)boardTopics:(NSString *)board Start:(int)start Token:(NSString*)token Mode:(int)mode;//参数版面名，start为下标
 +(NSArray *)singleTopic:(NSString *)board ID:(int)ID Start:(int)start Token:(NSString*)token;//参数帖子版面、及帖子ID，start为帖子下标
 +(NSArray *)searchTopics:(NSString *)key start:(NSString *)start  Token:(NSString*)token;
 +(NSArray *)searchBoards:(NSString *)key  Token:(NSString*)token;

@@ -27,22 +27,22 @@
     NSString * astro; //星座（用户相关设置允许后显示)
     NSString * mode; //在线状态
 }
-@property(nonatomic, retain)NSString * ID;
-@property(nonatomic, retain)NSString * name;
-@property(nonatomic, retain)NSString * token;
+@property(nonatomic, strong)NSString * ID;
+@property(nonatomic, strong)NSString * name;
+@property(nonatomic, strong)NSString * token;
 
-@property(nonatomic, retain)NSURL * avatar;
-@property(nonatomic, retain)NSDate * lastlogin;
-@property(nonatomic, retain)NSString * level;
+@property(nonatomic, strong)NSURL * avatar;
+@property(nonatomic, strong)NSDate * lastlogin;
+@property(nonatomic, strong)NSString * level;
 @property(nonatomic, assign)int posts;
 @property(nonatomic, assign)int perform;
 @property(nonatomic, assign)int experience;
 @property(nonatomic, assign)int medals;
 @property(nonatomic, assign)int logins;
 @property(nonatomic, assign)int life;
-@property(nonatomic, retain)NSString * gender;
-@property(nonatomic, retain)NSString * astro;
-@property(nonatomic, retain)NSString * mode;
+@property(nonatomic, strong)NSString * gender;
+@property(nonatomic, strong)NSString * astro;
+@property(nonatomic, strong)NSString * mode;
 
 
 @end

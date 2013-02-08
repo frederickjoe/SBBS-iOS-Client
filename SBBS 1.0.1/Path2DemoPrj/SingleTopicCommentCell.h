@@ -29,11 +29,11 @@
 }
 @property(nonatomic, assign)BOOL attExist;
 @property(nonatomic, assign)int ID;
-@property(nonatomic, retain)NSDate * time;
-@property(nonatomic, retain)NSString * author;
-@property(nonatomic, retain)NSString * content;
-@property(nonatomic, retain)NSString * quoter;
-@property(nonatomic, retain)NSString * quote;
+@property(nonatomic, strong)NSDate * time;
+@property(nonatomic, strong)NSString * author;
+@property(nonatomic, strong)NSString * content;
+@property(nonatomic, strong)NSString * quoter;
+@property(nonatomic, strong)NSString * quote;
 @property(nonatomic, assign)int read;
 @property(nonatomic, assign)int num;
 -(void)setReadyToShow;

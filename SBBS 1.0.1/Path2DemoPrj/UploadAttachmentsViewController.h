@@ -14,7 +14,7 @@
 @interface UploadAttachmentsViewController : UIViewController
 {
     UIImagePickerController *imagePicker;
-    NSObject<UIViewPassValueDelegate> * mDelegate;
+    NSObject<UIViewPassValueDelegate> * __unsafe_unretained mDelegate;
     MyBBS * myBBS;
     int postType;
     NSArray *attList;
@@ -30,8 +30,8 @@
 @property(nonatomic, assign)int postId;
 @property(nonatomic, strong)NSString *board;
 @property(nonatomic, assign)int postType;
-@property(nonatomic, assign)NSObject<UIViewPassValueDelegate> * mDelegate;
-@property(nonatomic, retain)NSArray *attList;
+@property(nonatomic, unsafe_unretained)NSObject<UIViewPassValueDelegate> * mDelegate;
+@property(nonatomic, strong)NSArray *attList;
 - (IBAction)pickImageFromAlbum:(id)sender;
 -(IBAction)cancel:(id)sender;
 @end

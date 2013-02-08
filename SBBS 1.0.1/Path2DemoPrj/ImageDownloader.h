@@ -16,10 +16,10 @@
     NSMutableData *activeDownload;
     NSURLConnection *imageConnection;
 }
-@property (nonatomic, retain)UIImageView * imageView;;
-@property (nonatomic, retain)ImageData * imageData;
-@property (nonatomic, retain)NSMutableData *activeDownload;
-@property (nonatomic, retain)NSURLConnection *imageConnection;
+@property (nonatomic, strong)UIImageView * imageView;;
+@property (nonatomic, strong)ImageData * imageData;
+@property (nonatomic, strong)NSMutableData *activeDownload;
+@property (nonatomic, strong)NSURLConnection *imageConnection;
 
 - (void)startDownload;
 - (void)cancelDownload;
