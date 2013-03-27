@@ -21,7 +21,6 @@
 #import "BBSAPI.h"
 #import "UserInfoViewController.h"
 #import "AttachmentsViewController.h"
-//#import "MWPhotoBrowserIncell.h"
 
 @protocol SingleTopicViewControllerDelegate <NSObject>
 -(void)refreshNotification;

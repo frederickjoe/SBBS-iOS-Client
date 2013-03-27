@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "LeftViewController.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "PushNotificationWindow.h"
 
 @implementation AppDelegate
 
@@ -26,7 +26,8 @@
 @synthesize myBBS;
 @synthesize isSearching;
 
-
+@synthesize notificationWindow;
+@synthesize selectedUserInfo;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.myBBS = [[MyBBS alloc] init];
@@ -80,12 +81,48 @@
     [self performSelector:@selector(TheAnimation) withObject:nil afterDelay:1];   [self.window addSubview:zakerLikeImageView];
     
     //[self refreshNotification];
-    [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(refreshNotification) userInfo:nil repeats:YES];
-    
+    //[NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(refreshNotification) userInfo:nil repeats:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(tapReceivedNotificationHandler:)
                                                  name:kMPNotificationViewTapReceivedNotification
                                                object:nil];
+    
+    
+    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    if (launchOptions) {
+        NSDictionary* pushNotificationKey = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (pushNotificationKey) {
+            if ([[[[pushNotificationKey objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"type"] isEqualToString:@"bbsnews"]) {
+                NSString * boardID = [[[pushNotificationKey objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"board"];
+                NSString * topicID = [[[pushNotificationKey objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"postId"];
+                
+                if (self.notificationWindow != nil) {
+                    [notificationWindow.rootViewController.view removeFromSuperview];
+                }
+                self.notificationWindow = [[PushNotificationWindow alloc] initWithFrame:rect];
+                notificationWindow.isBBSNews = YES;
+                notificationWindow.mDelegate = self;
+                notificationWindow.boardID = boardID;
+                notificationWindow.topicID = topicID;
+                [notificationWindow setReadyToShow];
+                [self showNotificationWithDelay:1.2];
+            }
+            if ([[[[pushNotificationKey objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"type"] isEqualToString:@"urlnews"]) {
+                NSString * url = [[[pushNotificationKey objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"url"];
+                
+                if (self.notificationWindow != nil) {
+                    [notificationWindow.rootViewController.view removeFromSuperview];
+                }
+                self.notificationWindow = [[PushNotificationWindow alloc] initWithFrame:rect];
+                notificationWindow.isBBSNews = NO;
+                notificationWindow.mDelegate = self;
+                notificationWindow.newsURL = url;
+                [notificationWindow setReadyToShow];
+                [self showNotificationWithDelay:1.2];
+            }
+        }
+    }
     
     return YES;
 }
@@ -154,6 +191,7 @@
  Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
  */
 }
+
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
     [self refreshNotification];
@@ -195,9 +233,161 @@
 
 - (void)tapReceivedNotificationHandler:(NSNotification *)notice
 {
-    /*
-    [self.homeViewController.navigationController popToRootViewControllerAnimated:NO];
-    [self.leftViewController showNotification];
-     */
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    if (selectedUserInfo) {
+        if ([[[[selectedUserInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"type"] isEqualToString:@"bbsnews"]) {
+            NSString * boardID = [[[selectedUserInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"board"];
+            NSString * topicID = [[[selectedUserInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"postId"];
+            
+            if (self.notificationWindow != nil) {
+                [notificationWindow.rootViewController.view removeFromSuperview];
+            }
+            self.notificationWindow = [[PushNotificationWindow alloc] initWithFrame:rect];
+            notificationWindow.isBBSNews = YES;
+            notificationWindow.mDelegate = self;
+            notificationWindow.boardID = boardID;
+            notificationWindow.topicID = topicID;
+            [notificationWindow setReadyToShow];
+            [self showNotificationWithDelay:0.2];
+        }
+        if ([[[[selectedUserInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"type"] isEqualToString:@"urlnews"]) {
+            NSString * url = [[[selectedUserInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"url"];
+            
+            if (self.notificationWindow != nil) {
+                [notificationWindow.rootViewController.view removeFromSuperview];
+            }
+            self.notificationWindow = [[PushNotificationWindow alloc] initWithFrame:rect];
+            notificationWindow.isBBSNews = NO;
+            notificationWindow.mDelegate = self;
+            notificationWindow.newsURL = url;
+            [notificationWindow setReadyToShow];
+            [self showNotificationWithDelay:0.2];
+        }
+    }
+}
+
+//推送通知处理
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    //9955cf26 091830d9 d0212e01 7b78525c 64876ee5 a08f1a73 68ead536 43644ed5
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    BOOL isGotDeviceToken = [defaults boolForKey:@"isGotDeviceToken"];
+    BOOL isPostDeviceToken = [defaults boolForKey:@"isPostDeviceToken"];
+    if (!isGotDeviceToken || !isPostDeviceToken) {
+        NSMutableString * rawtoken = [NSMutableString stringWithFormat:@"%@",deviceToken];
+        NSString * token = [rawtoken substringWithRange:NSMakeRange(1, 71)];
+        NSLog(@"Device token:%@",token);
+        NSString *encodedcontent = [token URLEncodedString];
+        
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:encodedcontent forKey:@"DeviceToken"];
+        [defaults setBool:YES forKey:@"isGotDeviceToken"];
+        
+        if (myBBS.mySelf != nil) {
+            [myBBS addPushNotificationToken];
+        }
+    }
+    else {
+        return;
+    }
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"失败了");
+}
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if (application.applicationState == UIApplicationStateActive) {
+        self.selectedUserInfo = userInfo;
+        if ([[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"type"] isEqualToString:@"bbsnews"] || [[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"type"] isEqualToString:@"urlnews"]){
+            
+            CFURLRef		soundFileURLRef;
+            SystemSoundID	soundFileObject;
+            NSURL *tapSound   = [[NSBundle mainBundle] URLForResource: @"myNotification"
+                                                        withExtension: @"m4a"];
+            soundFileURLRef = (__bridge CFURLRef) tapSound;
+            AudioServicesCreateSystemSoundID (soundFileURLRef, &soundFileObject);
+            AudioServicesPlaySystemSound (soundFileObject);
+            AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
+            
+            [MPNotificationView notifyWithText:@"新推送内容，点击查看"
+                                        detail:[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"body"]
+                                         image:[UIImage imageNamed:@"icon.png"]
+                                   andDuration:3.0];
+        }
+        else{
+            [self refreshNotification];
+            
+            CFURLRef		soundFileURLRef;
+            SystemSoundID	soundFileObject;
+            NSURL *tapSound   = [[NSBundle mainBundle] URLForResource: @"myNotification"
+                                                        withExtension: @"m4a"];
+            soundFileURLRef = (__bridge CFURLRef) tapSound;
+            AudioServicesCreateSystemSoundID (soundFileURLRef, &soundFileObject);
+            AudioServicesPlaySystemSound (soundFileObject);
+            AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
+            
+            [MPNotificationView notifyWithText:@"新消息，请到消息中心查看"
+                                        detail:[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"body"]
+                                         image:[UIImage imageNamed:@"icon.png"]
+                                   andDuration:3.0];
+        }
+        return;
+    }
+    
+    
+    //从后台进入
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    if (userInfo) {
+        if ([[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"type"] isEqualToString:@"bbsnews"]) {
+            NSString * boardID = [[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"board"];
+            NSString * topicID = [[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"postId"];
+            
+            if (self.notificationWindow != nil) {
+                [notificationWindow.rootViewController.view removeFromSuperview];
+            }
+            self.notificationWindow = [[PushNotificationWindow alloc] initWithFrame:rect];
+            notificationWindow.isBBSNews = YES;
+            notificationWindow.mDelegate = self;
+            notificationWindow.boardID = boardID;
+            notificationWindow.topicID = topicID;
+            [notificationWindow setReadyToShow];
+            [self showNotificationWithDelay:0.2];
+        }
+        if ([[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"type"] isEqualToString:@"urlnews"]) {
+            NSString * url = [[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"url"];
+            
+            if (self.notificationWindow != nil) {
+                [notificationWindow.rootViewController.view removeFromSuperview];
+            }
+            self.notificationWindow = [[PushNotificationWindow alloc] initWithFrame:rect];
+            notificationWindow.isBBSNews = NO;
+            notificationWindow.mDelegate = self;
+            notificationWindow.newsURL = url;
+            [notificationWindow setReadyToShow];
+            [self showNotificationWithDelay:0.2];
+        }
+    }
+}
+
+-(void)showNotificationWithDelay:(float)delay
+{
+    [notificationWindow.rootViewController.view setFrame:CGRectMake(0, 600, 320, notificationWindow.rootViewController.view.frame.size.height)];
+    [self.window addSubview:notificationWindow.rootViewController.view];
+    [UIView animateWithDuration:0.5f delay:delay options:UIViewAnimationOptionBeginFromCurrentState  animations:^{
+        [notificationWindow.rootViewController.view setFrame:CGRectMake(0, 20, 320, notificationWindow.rootViewController.view.frame.size.height)];
+    } completion:^(BOOL finished) {
+    }];
+}
+-(void)dismissNotification
+{
+    [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState  animations:^{
+        [notificationWindow.rootViewController.view setFrame:CGRectMake(0, 600, 320, notificationWindow.rootViewController.view.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [notificationWindow.rootViewController.view removeFromSuperview];
+    }];
 }
 @end

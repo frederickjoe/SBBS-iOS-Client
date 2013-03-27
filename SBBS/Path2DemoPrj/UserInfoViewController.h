@@ -20,7 +20,7 @@
 #import "BBSAPI.h"
 #import "ASIHTTPRequest.h"
 #import "ASINetworkQueue.h"
-
+#import "UIImageView+WebCache.h"
 @interface UserInfoViewController : UIViewController
 {
     NSString * userString;

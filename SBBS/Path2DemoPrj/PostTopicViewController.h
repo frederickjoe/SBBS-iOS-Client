@@ -11,7 +11,9 @@
 #import "BBSAPI.h"
 #import "UploadAttachmentsViewController.h"
 #import "HomeViewController.h"
-@interface PostTopicViewController : UIViewController<UITextFieldDelegate, UIViewPassValueDelegate>
+#import "FDStatusBarNotifierView.h"
+
+@interface PostTopicViewController : UIViewController<UITextFieldDelegate, UIViewPassValueDelegate, FDStatusBarNotifierViewDelegate>
 {
     IBOutlet UILabel * topTitleLabel;
     
@@ -31,6 +33,8 @@
     id __unsafe_unretained mDelegate;
     
     NSArray *attList;
+    
+    UIToolbar *keyboardToolbar;
 }
 @property(nonatomic, strong)Topic * rootTopic;
 @property(nonatomic, strong)NSString * boardName;

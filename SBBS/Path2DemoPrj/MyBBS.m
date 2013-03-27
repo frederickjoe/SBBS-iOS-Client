@@ -56,12 +56,30 @@
     }
     else {
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        BOOL isGotDeviceToken = [defaults boolForKey:@"isGotDeviceToken"];
+        if (isGotDeviceToken) {
+            BOOL success = [BBSAPI addNotificationToken:mySelf.token iToken:[defaults objectForKey:@"DeviceToken"]];
+            [defaults setBool:success forKey:@"isPostDeviceToken"];
+            if (!success) {
+                return nil;
+            }
+        }
+        
         [defaults setValue:mySelf.name forKey:@"UserName"];
         [defaults setValue:mySelf.ID forKey:@"UserID"];
         [defaults setValue:mySelf.token forKey:@"UserToken"];
         return mySelf;
     }   
 }
+
+-(BOOL)addPushNotificationToken
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    BOOL success = [BBSAPI addNotificationToken:mySelf.token iToken:[defaults objectForKey:@"DeviceToken"]];
+    [defaults setBool:success forKey:@"isPostDeviceToken"];
+    return success;
+}
+
 -(void)userLogout
 {
     mySelf.name = nil;
@@ -84,21 +102,6 @@
     if (notification != nil) {
         notificationCount = [notification.mails count] + [notification.ats count] + [notification.replies count];
         notification.count = notificationCount;
-        
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        BOOL isNotifySound = [defaults boolForKey:@"isNotifySound"];
-        if (notificationCount > oldNotificationCount) {
-            if (isNotifySound) {
-                CFURLRef		soundFileURLRef;
-                SystemSoundID	soundFileObject;
-                NSURL *tapSound   = [[NSBundle mainBundle] URLForResource: @"notification"
-                                                            withExtension: @"wav"];
-                soundFileURLRef = (__bridge CFURLRef) tapSound;
-                AudioServicesCreateSystemSoundID (soundFileURLRef, &soundFileObject);
-                AudioServicesPlaySystemSound (soundFileObject);
-                AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
-            }
-        }
     }
 }
 -(void)clearNotification

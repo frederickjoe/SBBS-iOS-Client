@@ -60,13 +60,13 @@
         return 1;
     }
     if(section == 1){
-        return 4;
+        return 3;
     }
     if (section == 2) {
         return 3;
     }
     if (section == 3) {
-        return 2;
+        return 1;
     }
     if (section == 4) {
         return 1;
@@ -76,7 +76,7 @@
 
 - (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 1 && indexPath.row == 3){
+    if(indexPath.section == 1 && indexPath.row == 2){
         return 74;
     }
     return 44;
@@ -118,8 +118,14 @@
                 {
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     cell.textLabel.text = @"当前用户";
-                    cell.detailTextLabel.text = appDelegate.myBBS.mySelf.ID;
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                    if (appDelegate.myBBS.mySelf.ID != nil) {
+                        cell.detailTextLabel.text = appDelegate.myBBS.mySelf.ID;
+                        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                    }
+                    else{
+                        cell.detailTextLabel.text = @"未登录";
+                        [cell setAccessoryType:UITableViewCellAccessoryNone];
+                    }
                     break;
                 }
                 default:
@@ -129,19 +135,6 @@
         case 1:
             switch (indexPath.row) {
                 case 0:
-                {
-                    cell.textLabel.text = @"新消息提示音";
-                    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-                    BOOL isNotifySound = [defaults boolForKey:@"isNotifySound"];
-                    UISwitch * notifySwitch = [[UISwitch alloc]initWithFrame:CGRectMake(210, 8, 80, 28)];
-                    notifySwitch.backgroundColor = [UIColor clearColor];
-                    notifySwitch.on = isNotifySound;
-                    [notifySwitch addTarget:self action:@selector(notifySwitch:) forControlEvents:UIControlEventValueChanged];
-                    [cell.contentView addSubview:notifySwitch];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    break;
-                }
-                case 1:
                 {
                     cell.textLabel.text = @"加载用户头像";
                     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -154,7 +147,7 @@
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     break;
                 }
-                case 2:
+                case 1:
                 {
                     cell.textLabel.text = @"图文混排显示";
                     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -167,7 +160,7 @@
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     break;
                 }
-                case 3:
+                case 2:
                 {
                     cell.textLabel.text = @"上传图片质量";
                     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -211,12 +204,7 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    cell.textLabel.text = @"清除图片缓存";
-                    break;
-                }
-                case 1:
-                {
-                    cell.textLabel.text = @"清除所有网络缓存";
+                    cell.textLabel.text = @"清除缓存";
                     break;
                 }
                 default:
@@ -243,13 +231,11 @@
     return cell;
 }
 
-
-
 #pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 && indexPath.row == 0) {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.ID != nil) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -264,6 +250,17 @@
         
         userInfoViewController.userString = appDelegate.myBBS.mySelf.ID;
         [self.navigationController pushViewController:userInfoViewController animated:YES];
+    }
+    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.ID == nil) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请先登录";
+        hud.margin = 30.f;
+        hud.yOffset = 0.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:0.8];
+        [tableView reloadData];
     }
     
     if(indexPath.section == 2 && indexPath.row == 0){
@@ -282,36 +279,23 @@
     if(indexPath.section == 3 && indexPath.row == 0){
         [[SDImageCache sharedImageCache] cleanDisk];
         [[SDImageCache sharedImageCache] clearDisk];
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        // Configure for text only and offset down
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"图片缓存清除成功";
-        hud.margin = 30.f;
-        hud.yOffset = 0.f;
-        hud.removeFromSuperViewOnHide = YES;
-        [hud hide:YES afterDelay:0.8];
-    }
-    
-    if(indexPath.section == 3 && indexPath.row == 1){
-        [[SDImageCache sharedImageCache] cleanDisk];
-        [[SDImageCache sharedImageCache] clearDisk];
         [[SDImageCache sharedImageCache] clearMemory];
         [ASIHTTPRequest clearSession];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"网络缓存清除成功";
+        hud.labelText = @"缓存清除成功";
         hud.margin = 30.f;
         hud.yOffset = 0.f;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:0.8];
+        [tableView reloadData];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-
 
 -(IBAction)done:(id)sender
 {
@@ -347,23 +331,7 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:isButtonOn forKey:@"isLoadAvatar"];
 }
--(void)notifySwitch:(id)sender
-{
-    UISwitch *switchButton = (UISwitch*)sender;
-    BOOL isButtonOn = [switchButton isOn];
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:isButtonOn forKey:@"isNotifySound"];
-    if (isButtonOn) {
-        CFURLRef		soundFileURLRef;
-        SystemSoundID	soundFileObject;
-        NSURL *tapSound   = [[NSBundle mainBundle] URLForResource: @"notification"
-                                                    withExtension: @"wav"];
-        soundFileURLRef = (__bridge CFURLRef) tapSound;
-        AudioServicesCreateSystemSoundID (soundFileURLRef, &soundFileObject);
-        AudioServicesPlaySystemSound (soundFileObject);
-        AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
-    }
-}
+
 -(void)showAttachments:(id)sender
 {
     UISwitch *switchButton = (UISwitch*)sender;

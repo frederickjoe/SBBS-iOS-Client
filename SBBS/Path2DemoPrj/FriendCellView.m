@@ -42,7 +42,7 @@
 		bottomLine.backgroundColor = [UIColor colorWithRed:(40.0f/255.0f) green:(47.0f/255.0f) blue:(61.0f/255.0f) alpha:1.0f];
 		[self.textLabel.superview addSubview:bottomLine];
         
-        IDandName = [[UILabel alloc] initWithFrame:CGRectMake(20, 11, 250, 21)];
+        IDandName = [[UILabel alloc] initWithFrame:CGRectMake(10, 11, 270, 21)];
         IDandName.backgroundColor = [UIColor clearColor];
         IDandName.font = [UIFont fontWithName:@"Helvetica" size:18.f];
 		IDandName.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -51,7 +51,7 @@
         IDandName.textAlignment = UITextAlignmentLeft;
         [self addSubview:IDandName];
         
-        mode = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 250, 12)];
+        mode = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 270, 12)];
         mode.backgroundColor = [UIColor clearColor];
         mode.font = [UIFont fontWithName:@"Helvetica" size:10.f];
 		mode.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -71,6 +71,16 @@
 
 -(void)setReadyToShow
 {
+    [IDandName setText:[NSString stringWithFormat:@"%@(%@)", user.ID, user.name]];
+    [mode setText:user.mode];
+}
+
+-(void)setLightSelectedBackgroundViewReadyToShow
+{
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor lightTextColor];
+    self.selectedBackgroundView = bgView;
+    
     [IDandName setText:[NSString stringWithFormat:@"%@(%@)", user.ID, user.name]];
     [mode setText:user.mode];
 }

@@ -90,11 +90,10 @@
     if (cell == nil) {
         NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"FriendCellView" owner:self options:nil];
         cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
     cell.user = searchedUser;
-    [cell setReadyToShow];
+    [cell setLightSelectedBackgroundViewReadyToShow];
 	return cell;
 }
 

@@ -10,13 +10,14 @@
 #import "AppDelegate.h"
 #import "AddPostUserViewController.h"
 #import "BBSAPI.h"
+#import "FDStatusBarNotifierView.h"
 
 @protocol PostMailViewControllerDelegate <NSObject>
 -(void)dismissPostMailView;
 @end
 
 
-@interface PostMailViewController : UIViewController
+@interface PostMailViewController : UIViewController<FDStatusBarNotifierViewDelegate>
 {
     IBOutlet UILabel * topTitleLabel;
     

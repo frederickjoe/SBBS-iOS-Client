@@ -64,17 +64,9 @@
 }
 
 
--(void)clearCellBack:(UITableViewCell *)cell
-{
-    cell.backgroundColor = [UIColor clearColor];
-}
-// Called after the user changes the selection.
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    UITableViewCell * cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor lightTextColor];
-    [self performSelector:@selector(clearCellBack:) withObject:cell afterDelay:0.5];
     
     TopicsViewController * topicsViewController = [[TopicsViewController alloc] initWithNibName:@"TopicsViewController" bundle:nil];
     Board * b = [topTenArray objectAtIndex:indexPath.row];
@@ -85,7 +77,7 @@
     [home restoreViewLocation];
     [home removeOldViewController];
     home.realViewController = topicsViewController;
-    [home showViewController:b.description];
+    [home showViewController:b.name];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,7 +85,6 @@
     if (cell == nil) {
         NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"BoardsCellView" owner:self options:nil];
         cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
     Board * b = [topTenArray objectAtIndex:indexPath.row];
@@ -101,7 +92,7 @@
     cell.description = b.description;
     cell.section = b.section;
     cell.leaf = b.leaf;
-    [cell setReadyToShow];
+    [cell setLightSelectedBackgroundViewReadyToShow];
     
     if (!b.leaf) {
         //[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];

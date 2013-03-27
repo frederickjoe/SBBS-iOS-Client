@@ -22,11 +22,16 @@
 #import "MyBBS.h"
 #import "PostMailViewController.h"
 
+@protocol LoginViewControllerDelegate <NSObject>
+-(void)LoginSuccess;
+@end
+
 @interface LoginViewController : UIViewController
 {
     IBOutlet UITextField * user;
     IBOutlet UITextField * pass;
     MBProgressHUD * HUD;
+    UIToolbar *keyboardToolbar;
     id mDelegate;
     MyBBS * myBBS;
 }

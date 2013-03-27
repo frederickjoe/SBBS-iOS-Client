@@ -28,5 +28,6 @@
 @property(nonatomic, assign)BOOL leaf;
 
 -(void)setReadyToShow;
+-(void)setLightSelectedBackgroundViewReadyToShow;
 -(void)showAinmationWhenSeleceted;
 @end

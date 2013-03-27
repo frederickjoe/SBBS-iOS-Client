@@ -45,7 +45,7 @@
 		bottomLine.backgroundColor = [UIColor colorWithRed:(40.0f/255.0f) green:(47.0f/255.0f) blue:(61.0f/255.0f) alpha:1.0f];
 		[self.textLabel.superview addSubview:bottomLine];
         
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(7, 11, 139, 21)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(3, 11, 143, 21)];
         nameLabel.backgroundColor = [UIColor clearColor];
         nameLabel.font = [UIFont boldSystemFontOfSize:17.0f];
 		nameLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -54,13 +54,12 @@
         nameLabel.textAlignment = UITextAlignmentRight;
         [self addSubview:nameLabel];
         
-        descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(154, 11, 116, 21)];
+        descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(154, 11, 130, 21)];
         descriptionLabel.backgroundColor = [UIColor clearColor];
         descriptionLabel.font = [UIFont boldSystemFontOfSize:17.0f];
 		descriptionLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		descriptionLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
 		descriptionLabel.textColor = [UIColor lightGrayColor];
-        nameLabel.textAlignment = UITextAlignmentRight;
         
         [self addSubview:descriptionLabel];
     }
@@ -75,7 +74,16 @@ return (interfaceOrientation == UIInterfaceOrientationPortrait);
 
 -(void)setReadyToShow
 {
-   // [nameLabel setText:[NSString stringWithFormat:@"%@(%@)",description,name]];
+    [nameLabel setText:name];
+    [descriptionLabel setText:description];
+}
+
+-(void)setLightSelectedBackgroundViewReadyToShow
+{
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor lightTextColor];
+    self.selectedBackgroundView = bgView;
+    // [nameLabel setText:[NSString stringWithFormat:@"%@(%@)",description,name]];
     [nameLabel setText:name];
     [descriptionLabel setText:description];
 }

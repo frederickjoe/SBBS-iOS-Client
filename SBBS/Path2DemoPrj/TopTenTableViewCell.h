@@ -25,6 +25,7 @@
     BOOL unread;
     BOOL top;
 }
+
 @property(nonatomic, assign)int ID;
 @property(nonatomic, strong)NSDate * time;
 @property(nonatomic, strong)NSString * title;

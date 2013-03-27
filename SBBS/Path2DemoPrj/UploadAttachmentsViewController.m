@@ -40,6 +40,13 @@
     HUD = nil;
     [attTable reloadData];
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    UIApplication *myApp = [UIApplication sharedApplication];
+    [myApp setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -52,8 +59,6 @@
 	[self.view insertSubview:HUD atIndex:0];
 	HUD.labelText = @"载入中...";
 	[HUD showWhileExecuting:@selector(refreshAttlist) onTarget:self withObject:nil animated:YES];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -126,12 +131,12 @@
 {
     NSString * curAttUrlString=[[attList objectAtIndex:curRow] attUrl];
     
-    if ([curAttUrlString hasSuffix:@".png"] || [curAttUrlString hasSuffix:@".jpg"] || [curAttUrlString hasSuffix:@".jpeg"] || [curAttUrlString hasSuffix:@".JPEG"] || [curAttUrlString hasSuffix:@".PNG"] || [curAttUrlString hasSuffix:@".JPG"]) {
+    if ([curAttUrlString hasSuffix:@".png"] || [curAttUrlString hasSuffix:@".jpg"] || [curAttUrlString hasSuffix:@".jpeg"] || [curAttUrlString hasSuffix:@".JPEG"] || [curAttUrlString hasSuffix:@".PNG"] || [curAttUrlString hasSuffix:@".JPG"] || [curAttUrlString hasSuffix:@".tiff"] || [curAttUrlString hasSuffix:@".TIFF"] || [curAttUrlString hasSuffix:@".bmp"] || [curAttUrlString hasSuffix:@".BMP"]) {
         
         NSMutableArray * photosArray = [[NSMutableArray alloc] init];
         for (int i = 0; i < [attList count]; i++) {
             NSString * attUrlString=[[attList objectAtIndex:i] attUrl];
-            if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".JPEG"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"])
+            if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".TIFF"] || [attUrlString hasSuffix:@".bmp"] || [attUrlString hasSuffix:@".BMP"])
             [photosArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:attUrlString]]];
         }
         self.photos = photosArray;

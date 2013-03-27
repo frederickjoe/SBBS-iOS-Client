@@ -29,6 +29,12 @@
     //NSLog(@"the get value is %@", value);
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    UIApplication *myApp = [UIApplication sharedApplication];
+    [myApp setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,7 +48,7 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
     if (postType == 0) {
-        [topTitleLabel setText:@"发表新文章"];
+        [topTitleLabel setText:@"发表新帖子"];
         [postTitle setText:@""];
         [postTitle becomeFirstResponder];
         [postContent setText:@""];
@@ -72,7 +78,7 @@
         ///////////////////////////
     }
     if (postType == 2) {
-        [topTitleLabel setText:@"修改文章"];
+        [topTitleLabel setText:@"修改帖子"];
         [postTitle setText:rootTopic.title];
         [postContent setText:rootTopic.content];
         [postContent becomeFirstResponder];
@@ -82,19 +88,42 @@
         attList=[rootTopic.attachments copy];
         ///////////////////////////
     }
-    // Do any additional setup after loading the view from its nib.
+    
+    keyboardToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 38.0f)];
+    keyboardToolbar.barStyle = UIBarStyleDefault;
+    UIBarButtonItem *spaceBarItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                  target:nil
+                                                                                  action:nil];
+    
+    UIBarButtonItem *previousBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@" 附件 ", @"")
+                                                                        style:UIBarButtonItemStyleBordered
+                                                                       target:self
+                                                                       action:@selector(operateAtt:)];
+    
+    UIBarButtonItem *nextBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"  @  ", @"")
+                                                                    style:UIBarButtonItemStyleBordered
+                                                                   target:self
+                                                                   action:@selector(addUser:)];
+    
+    UIBarButtonItem *spaceBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                  target:nil
+                                                                                  action:nil];
+    
+    [keyboardToolbar setItems:[NSArray arrayWithObjects:spaceBarItem, previousBarItem, nextBarItem, spaceBarItem1, nil]];
+    
+    postTitle.inputAccessoryView = keyboardToolbar;
+    postContent.inputAccessoryView = keyboardToolbar;
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 -(IBAction)cancel:(id)sender
 {
-    //[mDelegate dismissPostTopicView];
+    UIApplication *myApp = [UIApplication sharedApplication];
+    [myApp setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -109,18 +138,57 @@
 	[HUD showWhileExecuting:@selector(firstTimeLoad) onTarget:self withObject:nil animated:YES];
 }
 
+-(IBAction)addUser:(id)sender
+{
+    AddPostUserViewController * addPostUserViewController = [[AddPostUserViewController alloc] initWithNibName:@"AddPostUserViewController" bundle:nil];
+    addPostUserViewController.mDelegate = self;
+    [self presentModalViewController:addPostUserViewController animated:YES];
+}
+-(void)didAddUser:(NSString *)userID
+{
+    NSMutableString * string = [postContent.text mutableCopy];
+    [string appendString:@"@"];
+    [string appendString:userID];
+    [string appendString:@" "];
+    [postContent setText:string];
+    [postContent becomeFirstResponder];
+}
+-(void)dismissAddUserView
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 -(void)firstTimeLoad
 {
+    [HUD removeFromSuperview];
     if([self post])
     {
-        //[mDelegate dismissPostTopicView];
+        UIApplication *myApp = [UIApplication sharedApplication];
+        [myApp setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
         [self dismissModalViewControllerAnimated:YES];
+        
+        //[self performSelectorOnMainThread:@selector(sendSuccess) withObject:nil waitUntilDone:NO];
     }
     else {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"发送失败" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-        [alert show];
+        [self performSelectorOnMainThread:@selector(sendFailed) withObject:nil waitUntilDone:NO];
     }
-    [HUD removeFromSuperview];
+}
+
+-(void)sendSuccess
+{
+    FDStatusBarNotifierView *notifierView = [[FDStatusBarNotifierView alloc] initWithMessage:@"√  发表成功" delegate:self];
+    [notifierView showInWindow:self.view.window];
+}
+
+-(void)sendFailed
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"发送失败";
+    hud.margin = 30.f;
+    hud.yOffset = 0.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.8];
 }
 
 -(BOOL)post
@@ -195,5 +263,29 @@
 -(NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
 }
+
+
+// **Optional** StatusBarNotifierViewDelegate methods
+
+- (void)willPresentNotifierView:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"willPresentNotifierView");
+}
+
+- (void)didPresentNotifierView:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"didPresentNotifierView");
+}
+
+- (void)willHideNotifierView:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"willHideNotifierView");
+}
+
+- (void)didHideNotifierView:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"didHideNotifierView");
+}
+
+- (void)notifierViewTapped:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"notifierViewTapped");
+}
+
 
 @end

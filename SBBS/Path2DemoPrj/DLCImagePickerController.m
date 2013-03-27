@@ -47,6 +47,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    [self.imageView setFrame:CGRectMake(0, 44, rect.size.width, rect.size.height - 88)];
+    [self.imageView setAutoresizesSubviews:NO];
+    
     self.wantsFullScreenLayout = YES;
     //set background color
     self.view.backgroundColor = [UIColor colorWithPatternImage:
@@ -78,7 +83,7 @@
     [self loadFilters];
     
     //we need a crop filter for the live video
-    cropFilter = [[GPUImageCropFilter alloc] initWithCropRegion:CGRectMake(0.0f, 0.0f, 1.0f, 0.9f)];
+    cropFilter = [[GPUImageCropFilter alloc] initWithCropRegion:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f)];
     
     filter = [[GPUImageFilter alloc] init];
     
@@ -374,7 +379,7 @@
     
     [self prepareFilter];
     [self.retakeButton setHidden:NO];
-    [self.photoCaptureButton setTitle:@"Done" forState:UIControlStateNormal];
+    [self.photoCaptureButton setTitle:@"完成" forState:UIControlStateNormal];
     [self.photoCaptureButton setImage:nil forState:UIControlStateNormal];
     [self.photoCaptureButton setEnabled:YES];
     if(![self.filtersToggleButton isSelected]){
@@ -650,16 +655,43 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [stillCamera stopCameraCapture];
     [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
 }
 
 #pragma mark - UIImagePickerDelegate
+- (UIImage *)image: (UIImage *)oldimage fillSize: (CGSize) viewsize
+
+{
+    CGSize size = oldimage.size;
+    
+    CGFloat scalex = viewsize.width / size.width;
+    CGFloat scaley = viewsize.height / size.height;
+    CGFloat scale = MAX(scalex, scaley);
+    
+    UIGraphicsBeginImageContext(viewsize);
+    
+    CGFloat width = size.width * scale;
+    CGFloat height = size.height * scale;
+    
+    float dwidth = ((viewsize.width - width) / 2.0f);
+    float dheight = ((viewsize.height - height) / 2.0f);
+    
+    CGRect rect = CGRectMake(dwidth, dheight, size.width * scale, size.height * scale);
+    [oldimage drawInRect:rect];
+    
+    UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newimg;
+}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
     UIImage* outputImage = [info objectForKey:UIImagePickerControllerEditedImage];
     if (outputImage == nil) {
         outputImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSData *imageData=UIImagePNGRepresentation(outputImage);
+        if(imageData.length > 3000000)
+        outputImage = [self image:outputImage fillSize:CGSizeMake(outputImage.size.width/3, outputImage.size.height/3)];
     }
     
     if (outputImage) {
@@ -670,13 +702,12 @@
         [self.cameraToggleButton setEnabled:NO];
         [self.flashToggleButton setEnabled:NO];
         [self prepareStaticFilter];
-        [self.photoCaptureButton setTitle:@"Done" forState:UIControlStateNormal];
+        [self.photoCaptureButton setTitle:@"完成" forState:UIControlStateNormal];
         [self.photoCaptureButton setImage:nil forState:UIControlStateNormal];
         [self.photoCaptureButton setEnabled:YES];
         if(![self.filtersToggleButton isSelected]){
             [self showFilters];
         }
-
     }
 }
 

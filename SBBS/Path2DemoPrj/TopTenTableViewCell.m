@@ -19,6 +19,7 @@
 @synthesize unread;
 @synthesize top;
 
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -36,6 +37,10 @@
 
 -(void)setReadyToShow
 {
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor lightTextColor];
+    self.selectedBackgroundView = bgView;
+    
     if (unread) {
         [articleTitleLabel setAlpha:1];
     }

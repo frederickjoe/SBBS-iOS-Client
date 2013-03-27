@@ -8,6 +8,7 @@
 
 #import "NotificationViewController.h"
 @implementation NotificationViewController
+@synthesize showNotificationArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,9 +31,9 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     myBBS = appDelegate.myBBS;
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
-    customTableView = [[CustomNoFooterTableView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-44) Delegate:self];
-    [self.view addSubview:customTableView];
-    [customTableView reloadData];
+    customTableView = [[CustomNoFooterTableView alloc] initWithFrame:CGRectMake(0, 88, self.view.frame.size.width, self.view.frame.size.height - 108) Delegate:self];
+    [self.view insertSubview:customTableView atIndex:0];
+    [self refreshTableView];
     
     UISwipeGestureRecognizer* recognizer;
     recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(back:)];
@@ -80,70 +81,18 @@
 
 #pragma mark - 
 #pragma mark tableViewDelegate
-
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if (myBBS.notificationCount != 0)
-    {
-        return 4;
-    }
-    return 3;
-}
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if(section == 0)
-    {
-        if ([myBBS.notification.mails count] == 0)
-            return @"";
-        return @"收到邮件";
-    }
-    if(section == 1)
-    {
-        if ([myBBS.notification.ats count] == 0)
-            return @"";
-        return @"@我的";
-    }
-    if(section == 2)
-    {
-        if ([myBBS.notification.replies count] == 0)
-            return @"";
-        return @"回复我的";
-    }
-    if(section == 3)
-    {
-        if (myBBS.notificationCount != 0)
-             return @"操作";
-        return @"";
-    }
-    return @"";
-}
-
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return [myBBS.notification.mails count];
-    }
-    if (section == 1) {
-        return [myBBS.notification.ats count];
-    }
-    if (section == 2) {
-        return [myBBS.notification.replies count];
-    }
-    if (section == 3) {
-        if (myBBS.notificationCount != 0)
-            return 1;
-        return 0;
-    }
-    return 0;
+    return [self.showNotificationArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (seg.selectedSegmentIndex == 2) {
         MailsViewCell * cell = (MailsViewCell *)[tableView dequeueReusableCellWithIdentifier:@"MailsViewCell"];
         if (cell == nil) {
             NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"MailsViewCell" owner:self options:nil];
             cell = [array objectAtIndex:0];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
         
         Mail * mail = [myBBS.notification.mails objectAtIndex:indexPath.row];
@@ -152,12 +101,12 @@
         
         return cell;
     }
-    if (indexPath.section == 1) {
+    
+    if (seg.selectedSegmentIndex == 1) {
         TopTenTableViewCell * cell = (TopTenTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"TopTenTableViewCell"];
         if (cell == nil) {
             NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"TopTenTableViewCell" owner:self options:nil];
             cell = [array objectAtIndex:0];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
     
         Topic * topic = [myBBS.notification.ats objectAtIndex:indexPath.row];
@@ -169,12 +118,12 @@
         [cell setReadyToShow];
         return cell;
     }
-    if (indexPath.section == 2) {
+    
+    if (seg.selectedSegmentIndex == 0) {
         TopTenTableViewCell * cell = (TopTenTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"TopTenTableViewCell"];
         if (cell == nil) {
             NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"TopTenTableViewCell" owner:self options:nil];
             cell = [array objectAtIndex:0];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
         
         Topic * topic = [myBBS.notification.replies objectAtIndex:indexPath.row];
@@ -184,16 +133,6 @@
         cell.board = topic.board;
         cell.unread = YES;
         [cell setReadyToShow];
-        
-        return cell;
-    }
-    if (indexPath.section == 3) {
-        UITableViewCell * cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.textLabel.text = @"清除所有消息";
-        }
         return cell;
     }
     return nil;
@@ -201,26 +140,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath   
 {
-    if (indexPath.section == 0) {
+    if (seg.selectedSegmentIndex == 2) {
         return 70;
     }
     return 80;
 }
 
--(void)clearCellBack:(UITableViewCell *)cell
-{
-    cell.backgroundColor = [UIColor clearColor];
-}
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    UITableViewCell * cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor lightTextColor];
-    [self performSelector:@selector(clearCellBack:) withObject:cell afterDelay:0.5];
-    
-    
-    if (indexPath.section == 0) {        
+    if (seg.selectedSegmentIndex == 2) {
         SingleMailViewController * singleMailViewController = [[SingleMailViewController alloc] initWithNibName:@"SingleMailViewController" bundle:nil];
         singleMailViewController.rootMail = [myBBS.notification.mails objectAtIndex:indexPath.row];
         singleMailViewController.isForShowNotification = YES;
@@ -231,7 +161,7 @@
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:singleMailViewController animated:YES];
     }
-    if (indexPath.section == 1) {
+    if (seg.selectedSegmentIndex == 1) {
         SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithNibName:@"SingleTopicViewController" bundle:nil];
         singleTopicViewController.rootTopic = [myBBS.notification.ats objectAtIndex:indexPath.row];
         singleTopicViewController.isForShowNotification = YES;
@@ -241,7 +171,7 @@
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:singleTopicViewController animated:YES];
     }
-    if (indexPath.section == 2) {
+    if (seg.selectedSegmentIndex == 0) {
         SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithNibName:@"SingleTopicViewController" bundle:nil];
         singleTopicViewController.rootTopic = [myBBS.notification.replies objectAtIndex:indexPath.row];
         singleTopicViewController.isForShowNotification = YES;
@@ -250,10 +180,6 @@
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:singleTopicViewController animated:YES];
-    }
-    if (indexPath.section == 3)
-    {
-        [self showActionSheet];
     }
 }
 -(void)showActionSheet
@@ -278,12 +204,18 @@
     }
 }
 
+-(IBAction)clearAll:(id)sender
+{
+    if (myBBS.notification.count > 0) {
+        [self showActionSheet];
+    }
+}
 
--(void)firstTimeLoad
+-(void)clearNotification
 {
     [myBBS clearNotification];
     [myBBS refreshNotification];
-    [customTableView reloadData];
+    [self refreshTable];
     [HUD removeFromSuperview];
     HUD = nil;
 }
@@ -292,7 +224,7 @@
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view insertSubview:HUD atIndex:1];
 	HUD.labelText = @"清除消息中...";
-    [HUD showWhileExecuting:@selector(firstTimeLoad) onTarget:self withObject:nil animated:YES];
+    [HUD showWhileExecuting:@selector(clearNotification) onTarget:self withObject:nil animated:YES];
 }
 
 #pragma -
@@ -306,10 +238,22 @@
         [self performSelectorOnMainThread:@selector(refreshTableView) withObject:nil waitUntilDone:NO];
     }
 }
+
 -(void)refreshTableView
 {
+    if (seg.selectedSegmentIndex == 0) {
+        self.showNotificationArray = myBBS.notification.replies;
+    }
+    if (seg.selectedSegmentIndex == 1) {
+        self.showNotificationArray = myBBS.notification.ats;
+    }
+    if (seg.selectedSegmentIndex == 2) {
+        self.showNotificationArray = myBBS.notification.mails;
+    }
+    [self refreshNotificationImageView];
     [customTableView reloadData];
 }
+
 - (void)refreshTableHeaderDidTriggerRefresh:(UITableView *)tableView
 {
     [NSThread detachNewThreadSelector:@selector(refreshTable) toTarget:self withObject:nil];
@@ -320,5 +264,28 @@
 -(void)refreshNotification
 {
     [self refreshTable];
+}
+
+-(void)refreshNotificationImageView
+{
+    if ([myBBS.notification.replies count] == 0)
+        [commentNotificationImageView setHidden:YES];
+    else
+        [commentNotificationImageView setHidden:NO];
+    
+    if ([myBBS.notification.ats count] == 0)
+        [atNotificationImageView setHidden:YES];
+    else
+        [atNotificationImageView setHidden:NO];
+    
+    if ([myBBS.notification.mails count] == 0)
+        [mailNotificationImageView setHidden:YES];
+    else
+        [mailNotificationImageView setHidden:NO];
+}
+
+-(IBAction)segmentControlValueChanged:(id)sender
+{
+    [self refreshTableView];
 }
 @end

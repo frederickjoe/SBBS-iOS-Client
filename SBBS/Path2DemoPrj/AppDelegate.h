@@ -15,13 +15,15 @@
 
 @class LeftViewController;
 @class HomeViewController;
+@class PushNotificationWindow;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, MPNotificationViewDelegate> {
-    
+@interface AppDelegate : UIResponder <UIApplicationDelegate, MPNotificationViewDelegate, UIAlertViewDelegate> {
     MyBBS * myBBS;
     BOOL isSearching;
     
     UIImageView * zakerLikeImageView;
+    PushNotificationWindow * notificationWindow;
+    NSDictionary * selectedUserInfo;
 }
 
 @property (strong, nonatomic) IBOutlet UIWindow *window;
@@ -31,6 +33,8 @@
 @property (strong, nonatomic) IBOutlet LeftViewController *leftViewController;
 @property (strong, nonatomic) MyBBS * myBBS;
 @property (nonatomic, assign)BOOL isSearching;
+@property (strong, nonatomic) PushNotificationWindow * notificationWindow;
+@property (strong, nonatomic) NSDictionary * selectedUserInfo;
 
 - (void)showLeftViewTotaly;
 - (void)showLeftView;

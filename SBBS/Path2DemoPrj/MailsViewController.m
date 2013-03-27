@@ -124,7 +124,6 @@
     if (cell == nil) {
         NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"MailsViewCell" owner:self options:nil];
         cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
     Mail * mail = [topTenArray objectAtIndex:indexPath.row];
@@ -145,18 +144,9 @@
     return 70;
 }
 
--(void)clearCellBack:(UITableViewCell *)cell
-{
-    cell.backgroundColor = [UIColor clearColor];
-}
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    UITableViewCell * cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor lightTextColor];
-    [self performSelector:@selector(clearCellBack:) withObject:cell afterDelay:0.5];
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];    
     
     SingleMailViewController * singleMailViewController = [[SingleMailViewController alloc] initWithNibName:@"SingleMailViewController" bundle:nil];
     singleMailViewController.rootMail = [topTenArray objectAtIndex:indexPath.row];

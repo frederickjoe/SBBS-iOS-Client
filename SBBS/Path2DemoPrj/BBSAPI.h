@@ -11,6 +11,7 @@
 #import "JsonParseEngine.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import <netinet/in.h>
+
 @protocol UIViewPassValueDelegate
 
 - (void)passValue:(NSArray *)value;
@@ -19,11 +20,10 @@
 
 @interface BBSAPI : NSObject
 
-+(BOOL)isNetworkReachable;
+-(BOOL)isNetworkReachable;
+-(void)networkIsUnreachable;
 
 +(User *)userInfo:(NSString *)userID;
-
-
 +(NSArray *)topTen;
 +(NSArray *)sectionTopTen:(int)sectionNumber;
 +(NSArray *)hotBoards;
@@ -36,14 +36,13 @@
 +(NSArray *)searchTopics:(NSString *)key start:(NSString *)start  Token:(NSString*)token;
 +(NSArray *)searchBoards:(NSString *)key  Token:(NSString*)token;
 
-
-
 +(User *)login:(NSString *)user Pass:(NSString *)pass;
++(BOOL)addNotificationToken:(NSString *)token iToken:(NSString *)iToken;
 +(NSArray *)allFavSections:(NSString *)token;
 +(NSArray *)onlineFriends:(NSString *)token;
 
 
-+(NSArray *)postImageto:(NSURL *)url withImage:(UIImage *)img andToken:(NSString*)token;
+//+(NSArray *)postImageto:(NSURL *)url withImage:(UIImage *)img andToken:(NSString*)token;
 +(NSArray* )postImg:(NSString *)string Image:(UIImage *)image toUrl:(NSURL *)url;
 +(NSArray *)delImg:(NSURL*)url;
 

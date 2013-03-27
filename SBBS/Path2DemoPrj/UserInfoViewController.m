@@ -47,7 +47,6 @@
     [lastlogin setText:[NSString stringWithFormat:@"%@",lastloginstring]];
     
     [level setText:[NSString stringWithFormat:@"%@", user.level]];
-    
     [posts setText:[NSString stringWithFormat:@"%i", user.posts]];
     [perform setText:[NSString stringWithFormat:@"%i", user.perform]];
     [experience setText:[NSString stringWithFormat:@"%i", user.experience]];
@@ -91,24 +90,9 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     BOOL * isLoadAvatar = [defaults boolForKey:@"isLoadAvatar"];
     if (isLoadAvatar) {
-        if (!networkQueue) {
-            networkQueue = [[ASINetworkQueue alloc] init];
-        }
-        failed = NO;
-        [networkQueue reset];
-        [networkQueue setDownloadProgressDelegate:progressIndicator];
-        [networkQueue setRequestDidFinishSelector:@selector(imageFetchComplete:)];
-        [networkQueue setRequestDidFailSelector:@selector(imageFetchFailed:)];
-        [networkQueue setShowAccurateProgress:YES];
-        [networkQueue setDelegate:self];
         
-        ASIHTTPRequest *request;
-        request = [ASIHTTPRequest requestWithURL:user.avatar];
-        [request setDownloadDestinationPath:[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:user.ID]];
-        [request setDownloadProgressDelegate:progressIndicator];
-        //[request setUserInfo:[NSDictionary dictionaryWithObject:@"request1" forKey:@"name"]];
-        [networkQueue addOperation:request];
-        [networkQueue go];
+        [avatar setImageWithURL:user.avatar
+                       placeholderImage:[UIImage imageNamed:@"noavatar.png"]];
     }
     else {
         [avatar setImage:[UIImage imageNamed:@"noavatar.png"]];

@@ -43,7 +43,7 @@
     NSMutableArray * picArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [attachments count]; i++) {
         NSString * attUrlString=[[attachments objectAtIndex:i] attUrl];
-        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"])
+        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".TIFF"] || [attUrlString hasSuffix:@".bmp"] || [attUrlString hasSuffix:@".BMP"])
         {
             [picArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:attUrlString]]];
         }
@@ -53,6 +53,10 @@
 
 -(void)setReadyToShow
 {
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor lightTextColor];
+    self.selectedBackgroundView = bgView;
+    
     [articleTitleLabel setText:title];
     [authorLabel setText:author];
     [contentLabel setText:content];
@@ -86,5 +90,57 @@
         self.attachmentsViewController = nc;
     }
     
+    [self attachLongPressHandler];
 }
+
+
+
+#pragma -Longpress
+
+- (BOOL)canBecomeFirstResponder{
+    return YES;
+}
+
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+    if (action == @selector(copyTitleLabel:) || action == @selector(copyContentLabel:) || action == @selector(copyAuthorLabel:) ) {
+        return YES;
+    }
+    return NO;
+}
+
+//针对于copy的实现
+-(void)copyTitleLabel:(id)sender{
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    pboard.string = articleTitleLabel.text;
+}
+-(void)copyContentLabel:(id)sender{
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    pboard.string = contentLabel.text;
+}
+-(void)copyAuthorLabel:(id)sender{
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    pboard.string = authorLabel.text;
+}
+
+//添加touch事件
+-(void)attachLongPressHandler{
+    self.userInteractionEnabled = YES;  //用户交互的总开关
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self addGestureRecognizer:longPress];
+}
+
+- (void)longPress:(UILongPressGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        [self becomeFirstResponder];
+        UIMenuItem *copyTitle = [[UIMenuItem alloc] initWithTitle:@"复制标题" action:@selector(copyTitleLabel:)];
+        UIMenuItem *copyContent = [[UIMenuItem alloc] initWithTitle:@"复制正文" action:@selector(copyContentLabel:)];
+        UIMenuItem *copyAuthor = [[UIMenuItem alloc] initWithTitle:@"复制发帖人" action:@selector(copyAuthorLabel:)];
+        
+        UIMenuController *menu = [UIMenuController sharedMenuController];
+        [menu setMenuItems:[NSArray arrayWithObjects:copyAuthor, copyTitle, copyContent, nil]];
+        [menu setTargetRect:self.frame inView:self.superview];
+        [menu setMenuVisible:YES animated:YES];
+    }
+}
+
 @end

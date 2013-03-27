@@ -230,8 +230,6 @@
     [NSThread detachNewThreadSelector:@selector(refreshTable) toTarget:self withObject:nil];
 }
 
-
-
 -(IBAction)segmentControlValueChanged:(id)sender
 {
     UISegmentedControl *myUISegmentedControl=(UISegmentedControl *)sender;

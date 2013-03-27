@@ -41,6 +41,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -139,7 +141,6 @@
         if (cell == nil) {
             NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"SingleTopicCell" owner:self options:nil];
             cell = [array objectAtIndex:0];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
         Topic * topic = [topicsArray objectAtIndex:indexPath.row];
         cell.ID = topic.ID;
@@ -151,6 +152,9 @@
         
         if ([topic.attachments count] != 0) {
             cell.attExist = YES;
+        }
+        else{
+            cell.attExist = NO;
         }
         
         if ([[self getPicList:topic.attachments] count] == 0) {
@@ -171,7 +175,6 @@
         if (cell == nil) {
             NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"SingleTopicCommentCell" owner:self options:nil];
             cell = [array objectAtIndex:0];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
         Topic * topic = [topicsArray objectAtIndex:indexPath.row];
         
@@ -186,6 +189,9 @@
         cell.content = topic.content;
         if ([topic.attachments count] != 0) {
             cell.attExist = YES;
+        }
+        else{
+            cell.attExist = NO;
         }
         
         if ([[self getPicList:topic.attachments] count] == 0) {
@@ -207,7 +213,7 @@
     NSMutableArray * picArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [attachments count]; i++) {
         NSString * attUrlString=[[attachments objectAtIndex:i] attUrl];
-        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"])
+        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".TIFF"] || [attUrlString hasSuffix:@".bmp"] || [attUrlString hasSuffix:@".BMP"])
         {
             [picArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:attUrlString]]];
         }
@@ -267,23 +273,11 @@
     return returnHeight;
 }
 
--(void)clearCellBack:(UITableViewCell *)cell
-{
-    cell.backgroundColor = [UIColor clearColor];
-}
+
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    /*
-     CGRect rect = [tableView rectForRowAtIndexPath:indexPath];
-     [tableView setContentOffset:CGPointMake(rect.origin.x, rect.origin.y) animated:YES];
-     */
-    
-    UITableViewCell * cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    
-    cell.backgroundColor = [UIColor lightTextColor];
-    [self performSelector:@selector(clearCellBack:) withObject:cell afterDelay:0.5];
     selectTopic = [topicsArray objectAtIndex:indexPath.row];
     [self showActionSheet];
 }
@@ -342,16 +336,16 @@
                                                                highlightedImage:storyMenuItemImagePressed
                                                                    ContentImage:writenewImage
                                                         highlightedContentImage:nil];
-//    QuadCurveMenuItem *starMenuItem3 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
-//                                                               highlightedImage:storyMenuItemImagePressed
-//                                                                   ContentImage:homeImage
-//                                                        highlightedContentImage:nil];
+    QuadCurveMenuItem *starMenuItem3 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
+                                                               highlightedImage:storyMenuItemImagePressed
+                                                                   ContentImage:homeImage
+                                                        highlightedContentImage:nil];
     QuadCurveMenuItem *starMenuItem4 = [[QuadCurveMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed
                                                                    ContentImage:refreshImage
                                                         highlightedContentImage:nil];
     
-    NSArray *menus = [NSArray arrayWithObjects:starMenuItem1, starMenuItem2, /*starMenuItem3,*/ starMenuItem4, nil];
+    NSArray *menus = [NSArray arrayWithObjects:starMenuItem1, starMenuItem2, starMenuItem3, starMenuItem4, nil];
     
     menu = [[QuadCurveMenu alloc] initWithFrame:CGRectMake(10, 10, 200, 200) menus:menus];
     menu.delegate = self;
@@ -395,16 +389,33 @@
         HomeViewController * home = appDelegate.homeViewController;
         [home.navigationController pushViewController:userInfoViewController animated:YES];
     }
-//    if (idx == 2) {
-//        TopicsViewController * topicsViewController = [[TopicsViewController alloc] initWithNibName:@"TopicsViewController" bundle:nil];
-//        topicsViewController.boardName = rootTopic.board;
-//        
-//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        HomeViewController * home = appDelegate.homeViewController;
-//        [home.navigationController pushViewController:topicsViewController animated:YES];
-        
-//    }
     if (idx == 2) {
+        Topic * newRootTopic = [topicsArray objectAtIndex:0];
+        if (newRootTopic.ID == newRootTopic.gID) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            // Configure for text only and offset down
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"此帖已是主题帖";
+            hud.margin = 30.f;
+            hud.yOffset = 0.f;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:0.5];
+        }
+        else{
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            // Configure for text only and offset down
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"同主题展开";
+            hud.margin = 30.f;
+            hud.yOffset = 0.f;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:0.5];
+            
+            [self performSelector:@selector(ShowgID) withObject:nil afterDelay:0.4];
+        }
+    }
+    
+    if (idx == 3) {
         [customTableView.mTableView setContentOffset:CGPointMake(0, 0) animated:YES];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         // Configure for text only and offset down
@@ -417,6 +428,16 @@
     }
 }
 
+-(void)ShowgID
+{
+    Topic * newRootTopic = [topicsArray objectAtIndex:0];
+    NSArray * topics = [BBSAPI singleTopic:newRootTopic.board ID:newRootTopic.gID Start:0 Token:myBBS.mySelf.token];
+    SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithNibName:@"SingleTopicViewController" bundle:nil];
+    singleTopicViewController.rootTopic = [topics objectAtIndex:0];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    HomeViewController * home = appDelegate.homeViewController;
+    [home.navigationController pushViewController:singleTopicViewController animated:YES];
+}
 
 -(void)showActionSheet
 {
@@ -430,7 +451,7 @@
                                          delegate:self
                                          cancelButtonTitle:@"取消"
                                          destructiveButtonTitle:nil
-                                         otherButtonTitles:@"回复", @"查看用户", @"修改文章",@"查看附件", nil];
+                                         otherButtonTitles:@"回复", @"查看用户", @"修改帖子",@"查看附件", nil];
             actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
             [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
         }
@@ -441,7 +462,7 @@
                                          delegate:self
                                          cancelButtonTitle:@"取消"
                                          destructiveButtonTitle:nil
-                                         otherButtonTitles:@"回复", @"查看用户", @"修改文章", nil];
+                                         otherButtonTitles:@"回复", @"查看用户", @"修改帖子", nil];
             actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
             [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
         }

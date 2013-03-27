@@ -702,8 +702,11 @@ navigationBarBackgroundImageLandscapePhone = _navigationBarBackgroundImageLandsc
 			[_visiblePages addObject:page];
 			[_pagingScrollView addSubview:page];
 			MWLog(@"Added page at index %i", index);
+            
+            page.backgroundColor = [UIColor clearColor];
             page.captionView.backgroundColor = [UIColor clearColor];
             page._photoImageView.backgroundColor = [UIColor clearColor];
+            page._photoImageView.highlighted = NO;
             
             // Add caption
             MWCaptionView *captionView = [self captionViewForPhotoAtIndex:index];

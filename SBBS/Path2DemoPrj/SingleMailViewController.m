@@ -82,6 +82,8 @@
     recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(back:)];
     recognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:recognizer];
+    
+    [self attachLongPressHandler];
 }
 
 
@@ -133,4 +135,56 @@
 {
     [self dismissModalViewControllerAnimated:YES];
 }
+
+
+
+
+#pragma -Longpress
+
+- (BOOL)canBecomeFirstResponder{
+    return YES;
+}
+
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+    if (action == @selector(copyTitleLabel:) || action == @selector(copyContentLabel:) || action == @selector(copyAuthorLabel:) ) {
+        return YES;
+    }
+    return NO;
+}
+
+//针对于copy的实现
+-(void)copyTitleLabel:(id)sender{
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    pboard.string = titleLabel.text;
+}
+-(void)copyContentLabel:(id)sender{
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    pboard.string = content.text;
+}
+-(void)copyAuthorLabel:(id)sender{
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    pboard.string = authorLabel.text;
+}
+
+//添加touch事件
+-(void)attachLongPressHandler{
+    self.view.userInteractionEnabled = YES;  //用户交互的总开关
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self.view addGestureRecognizer:longPress];
+}
+
+- (void)longPress:(UILongPressGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        [self becomeFirstResponder];
+        UIMenuItem *copyTitle = [[UIMenuItem alloc] initWithTitle:@"复制标题" action:@selector(copyTitleLabel:)];
+        UIMenuItem *copyContent = [[UIMenuItem alloc] initWithTitle:@"复制正文" action:@selector(copyContentLabel:)];
+        UIMenuItem *copyAuthor = [[UIMenuItem alloc] initWithTitle:@"复制发信人" action:@selector(copyAuthorLabel:)];
+        
+        UIMenuController *menu = [UIMenuController sharedMenuController];
+        [menu setMenuItems:[NSArray arrayWithObjects:copyAuthor, copyTitle, copyContent, nil]];
+        [menu setTargetRect:self.view.frame inView:self.view];
+        [menu setMenuVisible:YES animated:YES];
+    }
+}
+
 @end

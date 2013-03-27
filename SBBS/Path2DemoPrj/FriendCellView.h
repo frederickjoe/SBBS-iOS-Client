@@ -20,5 +20,6 @@
 
 
 -(void)setReadyToShow;
+-(void)setLightSelectedBackgroundViewReadyToShow;
 -(void)showAinmationWhenSeleceted;
 @end

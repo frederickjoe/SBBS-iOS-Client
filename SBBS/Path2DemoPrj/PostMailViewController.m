@@ -25,6 +25,8 @@
 
 - (void)viewDidLoad
 {
+    UIApplication *myApp = [UIApplication sharedApplication];
+    [myApp setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     [super viewDidLoad];
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
@@ -101,6 +103,8 @@
 
 -(IBAction)cancel:(id)sender
 {
+    UIApplication *myApp = [UIApplication sharedApplication];
+    [myApp setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     [mDelegate dismissPostMailView];
 }
 
@@ -120,17 +124,35 @@
 
 -(void)firstTimeLoad
 {
+    [HUD removeFromSuperview];
     if([self didPost])
     {
+        UIApplication *myApp = [UIApplication sharedApplication];
+        [myApp setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
         [mDelegate dismissPostMailView];
+        
+        //[self performSelectorOnMainThread:@selector(sendSuccess) withObject:nil waitUntilDone:NO];
     }
     else {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"发送失败" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-        [alert show];
+        [self performSelectorOnMainThread:@selector(sendFailed) withObject:nil waitUntilDone:NO];
     }
-    [HUD removeFromSuperview];
 }
 
+-(void)sendSuccess
+{
+    FDStatusBarNotifierView *notifierView = [[FDStatusBarNotifierView alloc] initWithMessage:@"√  发表成功" delegate:self];
+    [notifierView showInWindow:self.view.window];
+}
+-(void)sendFailed
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"发送失败";
+    hud.margin = 30.f;
+    hud.yOffset = 0.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.8];
+}
 
 -(BOOL)didPost
 {
@@ -173,6 +195,29 @@
 }
 -(NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
+}
+
+
+// **Optional** StatusBarNotifierViewDelegate methods
+
+- (void)willPresentNotifierView:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"willPresentNotifierView");
+}
+
+- (void)didPresentNotifierView:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"didPresentNotifierView");
+}
+
+- (void)willHideNotifierView:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"willHideNotifierView");
+}
+
+- (void)didHideNotifierView:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"didHideNotifierView");
+}
+
+- (void)notifierViewTapped:(FDStatusBarNotifierView *)notifierView {
+    NSLog(@"notifierViewTapped");
 }
 
 @end

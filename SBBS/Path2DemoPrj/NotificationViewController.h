@@ -21,6 +21,14 @@
     CustomNoFooterTableView * customTableView;
     MyBBS * myBBS;
     MBProgressHUD * HUD;
+    
+    NSArray * showNotificationArray;
+    IBOutlet UISegmentedControl * seg;
+    IBOutlet UIImageView * commentNotificationImageView;
+    IBOutlet UIImageView * atNotificationImageView;
+    IBOutlet UIImageView * mailNotificationImageView;
 }
+@property(nonatomic, strong)NSArray * showNotificationArray;
 -(IBAction)back:(id)sender;
+-(IBAction)clearAll:(id)sender;
 @end

@@ -57,7 +57,7 @@
     NSMutableArray * picArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [attList count]; i++) {
         NSString * attUrlString=[[attList objectAtIndex:i] attUrl];
-        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"])
+        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".TIFF"] || [attUrlString hasSuffix:@".bmp"] || [attUrlString hasSuffix:@".BMP"])
         {
             [picArray addObject:[attList objectAtIndex:i]];
         }
@@ -69,7 +69,7 @@
     NSMutableArray * otherArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [attList count]; i++) {
         NSString * attUrlString=[[attList objectAtIndex:i] attUrl];
-        if (![attUrlString hasSuffix:@".png"] && ![attUrlString hasSuffix:@".jpg"] && ![attUrlString hasSuffix:@".jpeg"] && ![attUrlString hasSuffix:@".PNG"] && ![attUrlString hasSuffix:@".JPG"] && ![attUrlString hasSuffix:@".JPEG"])
+        if (![attUrlString hasSuffix:@".png"] && ![attUrlString hasSuffix:@".jpg"] && ![attUrlString hasSuffix:@".jpeg"] && ![attUrlString hasSuffix:@".PNG"] && ![attUrlString hasSuffix:@".JPG"] && ![attUrlString hasSuffix:@".JPEG"] && ![attUrlString hasSuffix:@".tiff"] && ![attUrlString hasSuffix:@".TIFF"] && ![attUrlString hasSuffix:@".bmp"] && ![attUrlString hasSuffix:@".BMP"])
         {
             [otherArray addObject:[attList objectAtIndex:i]];
         }

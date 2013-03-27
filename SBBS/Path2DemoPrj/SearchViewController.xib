@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">12D78</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">2083</string>
@@ -39,12 +39,12 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIToolbar" id="657412827">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">258</int>
+						<int key="NSvFlags">290</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUISegmentedControl" id="242963382">
 								<reference key="NSNextResponder" ref="657412827"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{41, 8}, {207, 30}}</string>
+								<int key="NSvFlags">290</int>
+								<string key="NSFrame">{{6, 8}, {278, 30}}</string>
 								<reference key="NSSuperview" ref="657412827"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -78,6 +78,10 @@
 									<reference ref="4"/>
 									<reference ref="4"/>
 								</array>
+								<object class="NSColor" key="IBTintColor" id="539919632">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+								</object>
 							</object>
 						</array>
 						<string key="NSFrameSize">{290, 44}</string>
@@ -89,22 +93,15 @@
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<array class="NSMutableArray" key="IBUIItems">
-							<object class="IBUIBarButtonItem" id="546991850">
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIToolbar" ref="657412827"/>
-								<int key="IBUISystemItemIdentifier">5</int>
-							</object>
 							<object class="IBUIBarButtonItem" id="47600767">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIStyle">1</int>
 								<reference key="IBUICustomView" ref="242963382"/>
 								<reference key="IBUIToolbar" ref="657412827"/>
-							</object>
-							<object class="IBUIBarButtonItem" id="448747434">
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIToolbar" ref="657412827"/>
-								<int key="IBUISystemItemIdentifier">5</int>
+								<reference key="IBUITintColor" ref="539919632"/>
 							</object>
 						</array>
+						<reference key="IBUITintColor" ref="539919632"/>
 					</object>
 				</array>
 				<string key="NSFrameSize">{290, 416}</string>
@@ -173,8 +170,6 @@
 						<reference key="object" ref="657412827"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="47600767"/>
-							<reference ref="546991850"/>
-							<reference ref="448747434"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -191,16 +186,6 @@
 						<reference key="object" ref="242963382"/>
 						<reference key="parent" ref="47600767"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">8</int>
-						<reference key="object" ref="546991850"/>
-						<reference key="parent" ref="657412827"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">9</int>
-						<reference key="object" ref="448747434"/>
-						<reference key="parent" ref="657412827"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -212,8 +197,6 @@
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>

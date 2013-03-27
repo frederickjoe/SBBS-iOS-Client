@@ -42,9 +42,10 @@
 							<object class="IBUILabel" id="539544688">
 								<reference key="NSNextResponder" ref="73067717"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{7, 11}, {139, 21}}</string>
+								<string key="NSFrame">{{4, 11}, {152, 21}}</string>
 								<reference key="NSSuperview" ref="73067717"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="609468580"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -57,14 +58,14 @@
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
 									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
 								</object>
-								<object class="NSColor" key="IBUIHighlightedColor" id="486024163">
+								<nil key="IBUIHighlightedColor"/>
+								<object class="NSColor" key="IBUIShadowColor" id="486024163">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
-								<reference key="IBUIShadowColor" ref="486024163"/>
 								<string key="IBUIShadowOffset">{0, 1}</string>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<float key="IBUIMinimumFontSize">10</float>
+								<float key="IBUIMinimumFontSize">17</float>
 								<int key="IBUITextAlignment">2</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1025820094">
 									<int key="type">2</int>
@@ -78,31 +79,32 @@
 							</object>
 							<object class="IBUILabel" id="609468580">
 								<reference key="NSNextResponder" ref="73067717"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{154, 11}, {116, 21}}</string>
+								<int key="NSvFlags">293</int>
+								<string key="NSFrame">{{163, 11}, {157, 22}}</string>
 								<reference key="NSSuperview" ref="73067717"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">Label</string>
-								<object class="NSColor" key="IBUITextColor">
+								<string key="IBUIText">材料科学于工程学院</string>
+								<object class="NSColor" key="IBUITextColor" id="351322427">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 								</object>
-								<reference key="IBUIHighlightedColor" ref="486024163"/>
+								<reference key="IBUIHighlightedColor" ref="351322427"/>
 								<reference key="IBUIShadowColor" ref="486024163"/>
 								<string key="IBUIShadowOffset">{0, 1}</string>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<float key="IBUIMinimumFontSize">10</float>
+								<float key="IBUIMinimumFontSize">17</float>
 								<reference key="IBUIFontDescription" ref="1025820094"/>
 								<reference key="IBUIFont" ref="767811463"/>
 							</object>
 						</array>
-						<string key="NSFrameSize">{290, 43}</string>
+						<string key="NSFrameSize">{320, 43}</string>
 						<reference key="NSSuperview" ref="345553928"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="539544688"/>
@@ -118,7 +120,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{290, 44}</string>
+				<string key="NSFrameSize">{320, 44}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="73067717"/>
@@ -170,8 +172,8 @@
 						<int key="objectID">4</int>
 						<reference key="object" ref="345553928"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="539544688"/>
 							<reference ref="609468580"/>
+							<reference ref="539544688"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

@@ -30,6 +30,10 @@
 
 -(void)setReadyToShow
 {
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor lightTextColor];
+    self.selectedBackgroundView = bgView;
+    
     if (mail.type == 0)
         [authorLabel setText:[NSString stringWithFormat:@"发件人：%@", mail.author]];
     if (mail.type == 1)

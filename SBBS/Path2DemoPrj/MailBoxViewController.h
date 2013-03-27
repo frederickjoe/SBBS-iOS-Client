@@ -19,7 +19,7 @@
 #import "BBSAPI.h"
 #import "MyBBS.h"
 #import "PostMailViewController.h"
-#import "GHMenuCell.h"
+#import "MailCell.h"
 
 @interface MailBoxViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, PostMailViewControllerDelegate>
 {

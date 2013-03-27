@@ -27,10 +27,83 @@
     [super viewDidLoad];
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperbackground2.png"]];
     [user becomeFirstResponder];
+    
+    keyboardToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 38.0f)];
+    keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+    
+    UIBarButtonItem *previousBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"上一项", @"")
+                                                                        style:UIBarButtonItemStyleBordered
+                                                                       target:self
+                                                                       action:@selector(previousField:)];
+    
+    UIBarButtonItem *nextBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"下一项", @"")
+                                                                    style:UIBarButtonItemStyleBordered
+                                                                   target:self
+                                                                   action:@selector(nextField:)];
+    
+    UIBarButtonItem *spaceBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                  target:nil
+                                                                                  action:nil];
+    
+    UIBarButtonItem *doneBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"登录", @"")
+                                                                    style:UIBarButtonItemStyleDone
+                                                                   target:self
+                                                                   action:@selector(login:)];
+    
+    [keyboardToolbar setItems:[NSArray arrayWithObjects:previousBarItem, nextBarItem, spaceBarItem, doneBarItem, nil]];
+    
+    user.inputAccessoryView = keyboardToolbar;
+    pass.inputAccessoryView = keyboardToolbar;
+    
     // Do any additional setup after loading the view from its nib.
 }
+
+
+#pragma mark - Others
+- (void)resignKeyboard:(id)sender
+{
+    id firstResponder = [self getFirstResponder];
+    if ([firstResponder isKindOfClass:[UITextField class]]) {
+        [firstResponder resignFirstResponder];
+    }
+}
+
+- (void)previousField:(id)sender
+{
+    id firstResponder = [self getFirstResponder];
+    if ([firstResponder isKindOfClass:[UITextField class]]) {
+        NSUInteger tag = [firstResponder tag];
+        NSUInteger previousTag = tag == 1 ? 1 : tag - 1;
+        UITextField *previousField = (UITextField *)[self.view viewWithTag:previousTag];
+        [previousField becomeFirstResponder];
+    }
+}
+
+- (void)nextField:(id)sender
+{
+    id firstResponder = [self getFirstResponder];
+    if ([firstResponder isKindOfClass:[UITextField class]]) {
+        NSUInteger tag = [firstResponder tag];
+        NSUInteger nextTag = tag == 2 ? 2 : tag + 1;
+        UITextField *nextField = (UITextField *)[self.view viewWithTag:nextTag];
+        [nextField becomeFirstResponder];
+    }
+}
+
+- (id)getFirstResponder
+{
+    NSUInteger index = 0;
+    while (index <= 2) {
+        UITextField *textField = (UITextField *)[self.view viewWithTag:index];
+        if ([textField isFirstResponder]) {
+            return textField;
+        }
+        index++;
+    }
+    return NO;
+}
+
 
 - (void)viewDidUnload
 {
@@ -70,7 +143,7 @@
     [pass resignFirstResponder];
     
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-	[self.view insertSubview:HUD atIndex:5];
+	[self.view addSubview:HUD];
 	HUD.labelText = @"登录中...";
 	[HUD showWhileExecuting:@selector(firstTimeLoad) onTarget:self withObject:nil animated:YES];
     [HUD release];
@@ -79,19 +152,32 @@
 -(void)firstTimeLoad
 {
     User * myself = [myBBS userLogin:user.text Pass:pass.text];
-    [HUD removeFromSuperViewOnHide];
+    [HUD removeFromSuperview];
     if (myself == nil) {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"输入的信息有误" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-        [alert show];
-        [alert release];
+        [self performSelectorOnMainThread:@selector(loginFailed) withObject:nil waitUntilDone:NO];
     }
     else {
-        [mDelegate LoginSuccess];
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate refreshNotification];
-        [appDelegate.leftViewController dismissModalViewControllerAnimated:YES];
-        [appDelegate showLeftView];
-    }  
+        [self performSelectorOnMainThread:@selector(loginSuccess) withObject:nil waitUntilDone:NO];
+    }
 }
 
+-(void)loginSuccess
+{
+    [mDelegate LoginSuccess];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate refreshNotification];
+    [appDelegate.leftViewController dismissModalViewControllerAnimated:YES];
+    [appDelegate showLeftView];
+}
+
+-(void)loginFailed
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"输入的账户信息有误";
+    hud.margin = 30.f;
+    hud.yOffset = 0.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.8];
+}
 @end
